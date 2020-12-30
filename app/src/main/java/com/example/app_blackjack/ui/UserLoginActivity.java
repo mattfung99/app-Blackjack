@@ -31,6 +31,7 @@ public class UserLoginActivity extends AppCompatActivity {
         TextView textCreateAccount = (TextView) findViewById(R.id.textCreateAccount);
         textCreateAccount.setOnClickListener(v -> {
             Intent createUserIntent = CreateUserActivity.makeIntent(UserLoginActivity.this);
+            createUserIntent.putExtra("edit", false);
             startActivity(createUserIntent);
         });
     }

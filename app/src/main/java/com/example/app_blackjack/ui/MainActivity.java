@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_create_user:
                 Intent createUserIntent = CreateUserActivity.makeIntent(MainActivity.this);
+                createUserIntent.putExtra("edit", false);
                 startActivity(createUserIntent);
                 break;
         }
