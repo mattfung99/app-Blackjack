@@ -40,4 +40,7 @@
         ImageView contentDescription
     -->
     <string name="todo">TODO</string>
+
+
+    <string name="empty_file_path" />
 </resources>
