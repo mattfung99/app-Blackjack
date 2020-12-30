@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent loginIntent = UserLoginActivity.makeIntent(MainActivity.this);
                 startActivity(loginIntent);
                 break;
-//            case R.id.action_create_user:
-//                Intent createUserIntent = CreateUserActivity.makeIntent(MainActivity.this);
-//                startActivity(createUserIntent);
-//                break;
+            case R.id.action_create_user:
+                Intent createUserIntent = CreateUserActivity.makeIntent(MainActivity.this);
+                startActivity(createUserIntent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

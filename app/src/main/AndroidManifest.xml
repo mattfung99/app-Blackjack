@@ -23,10 +23,15 @@
         <activity
             android:name=".ui.UserLoginActivity"
             android:label="@string/login_activity_name"
-            android:screenOrientation="landscape"
             android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
-
+        <activity
+            android:name=".ui.CreateUserActivity"
+            android:label="@string/create_user_activity_name"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.App_blackjack" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

@@ -25,5 +25,19 @@
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>
     <string name="btn_login">Login</string>
-    <string name="text_create_account">Create Account</string>
+    <string name="text_create_user">Create User</string>
+
+    <!-- CreateUserActivity   -->
+    <string name="create_user_activity_name">Create User</string>
+    <string name="text_enter_username">Enter Username (Max 25 Char)</string>
+    <string name="hint_username_limit">Type Here</string>
+    <string name="text_enter_password">Enter Password (Max 25 Char)</string>
+    <string name="hint_password_limit">Must contain number</string>
+    <string name="btn_create_user">Create User</string>
+    <string name="btn_select_photo">Select Photo</string>
+
+    <!--
+        ImageView contentDescription
+    -->
+    <string name="todo">TODO</string>
 </resources>
