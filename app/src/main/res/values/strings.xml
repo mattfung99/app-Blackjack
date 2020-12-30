@@ -29,12 +29,35 @@
 
     <!-- CreateUserActivity   -->
     <string name="create_user_activity_name">Create User</string>
-    <string name="text_enter_username">Enter Username (Max 25 Char)</string>
+    <string name="edit_user_activity_name">Edit User</string>
+    <string name="text_enter_username">Enter Username (Max 16 Char)</string>
     <string name="hint_username_limit">Type Here</string>
-    <string name="text_enter_password">Enter Password (Max 25 Char)</string>
+    <string name="text_enter_password">Enter Password (Max 16 Char)</string>
     <string name="hint_password_limit">Must contain number</string>
+    <string name="text_reenter_password">Re-Enter Password</string>
+    <string name="text_enter_new_username">Enter New Username (Max 16 Char)</string>
+    <string name="text_enter_new_password">Enter New Password (Max 16 Char)</string>
     <string name="btn_create_user">Create User</string>
     <string name="btn_select_photo">Select Photo</string>
+    <string name="btn_delete_user">Delete User</string>
+    <string-array name="photo_options">
+        <item>Choose photo from gallery</item>
+        <item>Take photo with camera</item>
+    </string-array>
+    <string name="title_select_photo_alert_dialog">Select Photo Option</string>
+    <string name="empty_string" />
+    <string name="invalid_empty_username">Username cannot be empty</string>
+    <string name="invalid_username_contains_space">Username cannot contain spaces</string>
+    <string name="invalid_username_taken">Username unavailable</string>
+    <string name="valid_username">Username available</string>
+    <string name="invalid_empty_password">Password cannot be empty</string>
+    <string name="invalid_password_contains_space">Password cannot contain spaces</string>
+    <string name="invalid_password_no_number">Password must contain a number</string>
+    <string name="valid_password">Password valid</string>
+    <string name="invalid_re_password">Passwords do not match</string>
+    <string name="valid_re_password">Passwords match</string>
+    <string name="toast_invalid_input">Cannot create user</string>
+    <string name="toast_user_created">User created</string>
 
     <!--
         ImageView contentDescription

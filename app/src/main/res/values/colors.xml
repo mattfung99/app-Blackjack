@@ -16,8 +16,11 @@
     <color name="default_text_color">#bdb760</color>
     <color name="default_tool_bar_color">#594633</color>
 
-    <!--  Menu customized  -->
+    <!--  Main customized  -->
     <color name="menu_background_color">#27530F</color>
     <color name="button_border_color">#594633</color>
 
+    <!--  CreateUser customized  -->
+    <color name="invalid_red">#F44336</color>
+    <color name="valid_green">#4CAF50</color>
 </resources>
