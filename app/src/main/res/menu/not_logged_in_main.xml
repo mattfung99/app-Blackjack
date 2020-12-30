@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.app_blackjack.MainActivity">
+
+    <item
+        android:id="@+id/user_picture"
+        android:orderInCategory="100"
+        android:enabled="false"
+        android:title="@string/action_user_picture"
+        android:icon="@drawable/default_user"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/user_profile"
+        android:orderInCategory="100"
+        android:title="@string/action_display_user"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_log_in"
+        android:orderInCategory="100"
+        android:title="@string/action_log_in"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_create_user"
+        android:orderInCategory="100"
+        android:title="@string/action_create_user"
+        app:showAsAction="never" />
+</menu>

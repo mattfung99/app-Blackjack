@@ -1,12 +1,22 @@
 <resources>
-    <string name="app_name">app_blackjack</string>
+    <string name="app_name">Blackjack</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- MainActivity   -->
+    <string name="main_activity_name">Menu</string>
+    <string name="menu_title">Blackjack</string>
+    <string name="menu_start">Start Game</string>
+    <string name="menu_continue">Continue Game</string>
+    <string name="menu_restart">Restart Game</string>
+    <string name="menu_options">Options</string>
+    <string name="menu_help">Help</string>
+
+    <!--  MainActivity Menu  -->
+    <string name="action_user_picture">Picture</string>
+    <string name="action_display_user">Login</string>
+    <string name="action_log_in">Login</string>
+    <string name="action_create_user">Create user</string>
+    <string name="action_view_profile">View stats</string>
+    <string name="action_edit_user">Edit profile</string>
+    <string name="action_sign_out">Sign out</string>
 </resources>
