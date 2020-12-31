@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupButtons();
         retrieveUserSessionFromSharedPref();
+        retrieveStatsFromSharedPref();
     }
 
     @Override
@@ -165,6 +166,18 @@ public class MainActivity extends AppCompatActivity {
     private void retrieveUserSessionFromSharedPref() {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         dHandler.setUserLoggedIn(sessionPref.getBoolean("userLoggedIn", false));
+    }
+
+    private void retrieveStatsFromSharedPref() {
+        SharedPreferences statsPref = getSharedPreferences("PREF_STATISTICS", MODE_PRIVATE);
+        dHandler.setMostMoneyWon(getDouble(statsPref, "allTimeMostMoneyWon", 0.0));
+        dHandler.setUserMostMoneyWon(statsPref.getString("allTimeMostMoneyWonUser", "error"));
+        dHandler.setUserMostMoneyLost(statsPref.getString("allTimeMostMoneyLostUser", "error"));
+        dHandler.setMostMoneyLost(getDouble(statsPref, "allTimeMostMoneyLost", 0.0));
+    }
+
+    private double getDouble(final SharedPreferences statsPrefs, final String key, final double defaultValue) {
+        return Double.longBitsToDouble(statsPrefs.getLong(key, Double.doubleToLongBits(defaultValue)));
     }
 
     private void saveLoggedOutSessionIntoSharedPref(boolean userNotLoggedOut) {
