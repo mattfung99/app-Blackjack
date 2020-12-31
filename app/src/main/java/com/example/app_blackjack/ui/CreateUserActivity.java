@@ -120,8 +120,8 @@ public class CreateUserActivity extends AppCompatActivity {
 
     private void setupUserProfile() {
         displayImageUser = (ImageView)findViewById(R.id.user_profile_picture);
-        eTextUsername = (EditText)findViewById(R.id.editTextUsername);
-        eTextPassword = (EditText)findViewById(R.id.editTextPassword);
+        eTextUsername = (EditText)findViewById(R.id.editTextEnterUsername);
+        eTextPassword = (EditText)findViewById(R.id.editTextEnterPassword);
         eTextRePassword = (EditText)findViewById(R.id.editTextReenterPassword);
         textUsername = (TextView)findViewById(R.id.textEnterUsername);
         textPassword = (TextView)findViewById(R.id.textEnterPassword);
@@ -168,7 +168,7 @@ public class CreateUserActivity extends AppCompatActivity {
             textInvalidUsername.setText(getString(R.string.invalid_username_contains_space));
             textInvalidUsername.setTextColor(ContextCompat.getColor(this, R.color.invalid_red));
             return false;
-        } else if (keyFromPref != null) {
+        } else if (keyFromPref != null || eTextUsername.getText().toString().matches("error")) {
             textInvalidUsername.setText(getString(R.string.invalid_username_taken));
             textInvalidUsername.setTextColor(ContextCompat.getColor(this, R.color.invalid_red));
             return false;

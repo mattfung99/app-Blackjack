@@ -32,14 +32,14 @@
             app:layout_constraintVertical_bias="0.05" />
 
         <EditText
-            android:id="@+id/editTextUsername"
+            android:id="@+id/editTextEnterUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autofillHints=""
             android:ems="10"
             android:hint="@string/hint_username_limit"
-            android:maxLength="16"
             android:inputType="textPersonName"
+            android:maxLength="16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.086"
@@ -75,7 +75,7 @@
             app:layout_constraintVertical_bias="0.345" />
 
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/editTextEnterPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autofillHints=""

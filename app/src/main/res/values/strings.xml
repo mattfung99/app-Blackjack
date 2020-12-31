@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Blackjack</string>
 
+    <!--
+        ImageView contentDescription
+    -->
+    <string name="todo">TODO</string>
+
     <!-- MainActivity   -->
     <string name="main_activity_name">Menu</string>
     <string name="menu_title">Blackjack</string>
@@ -58,12 +63,12 @@
     <string name="valid_re_password">Passwords match</string>
     <string name="toast_invalid_input">Cannot create user</string>
     <string name="toast_user_created">User created</string>
-
-    <!--
-        ImageView contentDescription
-    -->
-    <string name="todo">TODO</string>
-
-
     <string name="empty_file_path" />
+
+    <!--  UserLoginActivity  -->
+    <string name="invalid_credentials_empty">Credentials cannot be empty</string>
+    <string name="invalid_user_dne">User does not exist</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="toast_login_successful">Login successful</string>
+    <string name="toast_logout_successful">Logout successful</string>
 </resources>

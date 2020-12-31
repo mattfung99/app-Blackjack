@@ -2,6 +2,7 @@ package com.example.app_blackjack.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,8 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
+import com.example.app_blackjack.model.User;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -24,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupButtons();
+        retrieveUserSessionFromSharedPref();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -46,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateOptionsMenu(Menu menu) {
         if (dHandler.isUserLoggedIn()) {
+            if (!dHandler.isDataLoadedFromSharedPref()) {
+                retrieveUserFromSharedPref();
+            }
             getMenuInflater().inflate(R.menu.logged_in_main, menu);
             displayProfilePicture(menu);
             menu.findItem(R.id.user_profile).setTitle(dHandler.getUser().getUsername());
@@ -123,21 +133,46 @@ public class MainActivity extends AppCompatActivity {
     private boolean fetchLoggedInAction(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit_user:
-//                Intent editUserIntent = EditUserActivity.makeIntent(MainActivity.this);
-//                startActivity(editUserIntent);
-//                break;
+                Intent editUserIntent = CreateUserActivity.makeIntent(MainActivity.this);
+                editUserIntent.putExtra("edit", true);
+                startActivity(editUserIntent);
+                break;
             case R.id.action_view_profile:
 //                Intent viewProfileIntent = ViewProfileActivity.makeIntent(MainActivity.this);
 //                startActivity(viewProfileIntent);
 //                break;
             case R.id.action_sign_out:
-                // To be added
+                dHandler.setUser(new User("error", "error404", ""));
+                dHandler.setUserLoggedIn(false);
+                saveLoggedOutSessionIntoSharedPref(false);
+                Toast.makeText(this, getString(R.string.toast_logout_successful), Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(getIntent());
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void retrieveDataFromSharedPref() {
+    private void retrieveUserFromSharedPref() {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = userPref.getString(sessionPref.getString("userSessionKey", "error"), "error");
+        User currUser = gson.fromJson(json, User.class);
+        dHandler.setUser(currUser);
+        dHandler.setDataLoadedFromSharedPref(true);
+    }
 
+    private void retrieveUserSessionFromSharedPref() {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        dHandler.setUserLoggedIn(sessionPref.getBoolean("userLoggedIn", false));
+    }
+
+    private void saveLoggedOutSessionIntoSharedPref(boolean userNotLoggedOut) {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences.Editor sessionEditor = sessionPref.edit();
+        sessionEditor.putString("userSessionKey", "error");
+        sessionEditor.putBoolean("userLoggedIn", userNotLoggedOut);
+        sessionEditor.apply();
     }
 }

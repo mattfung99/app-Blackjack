@@ -8,6 +8,7 @@ public class DataHandler {
     private double mostMoneyWon;
     private double mostMoneyLost;
     private boolean userLoggedIn;
+    private boolean dataLoadedFromSharedPref;
 
     public static DataHandler getInstance() {
         if (instance == null)
@@ -17,6 +18,10 @@ public class DataHandler {
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Game getGame() {
@@ -29,5 +34,13 @@ public class DataHandler {
 
     public void setUserLoggedIn(boolean userLoggedIn) {
         this.userLoggedIn = userLoggedIn;
+    }
+
+    public boolean isDataLoadedFromSharedPref() {
+        return dataLoadedFromSharedPref;
+    }
+
+    public void setDataLoadedFromSharedPref(boolean dataLoadedFromSharedPref) {
+        this.dataLoadedFromSharedPref = dataLoadedFromSharedPref;
     }
 }
