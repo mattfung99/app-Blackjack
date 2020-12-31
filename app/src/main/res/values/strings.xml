@@ -43,6 +43,7 @@
     <string name="text_enter_new_username">Enter New Username (Max 16 Char)</string>
     <string name="text_enter_new_password">Enter New Password (Max 16 Char)</string>
     <string name="btn_create_user">Create User</string>
+    <string name="btn_save_changes">Save Changes</string>
     <string name="btn_select_photo">Select Photo</string>
     <string name="btn_delete_user">Delete User</string>
     <string-array name="photo_options">
@@ -63,6 +64,9 @@
     <string name="valid_re_password">Passwords match</string>
     <string name="toast_invalid_input">Cannot create user</string>
     <string name="toast_user_created">User created</string>
+    <string name="toast_invalid_input_edit">Cannot save changes</string>
+    <string name="toast_changes_saved">Changes saved</string>
+    <string name="toast_user_deleted">User deleted</string>
     <string name="empty_file_path" />
 
     <!--  UserLoginActivity  -->
