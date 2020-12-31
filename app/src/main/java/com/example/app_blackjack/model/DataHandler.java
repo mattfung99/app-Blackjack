@@ -7,6 +7,8 @@ public class DataHandler {
     private Game game;
     private double mostMoneyWon;
     private double mostMoneyLost;
+    private String userMostMoneyWon;
+    private String userMostMoneyLost;
     private boolean userLoggedIn;
     private boolean dataLoadedFromSharedPref;
 
@@ -26,6 +28,38 @@ public class DataHandler {
 
     public Game getGame() {
         return game;
+    }
+
+    public double getMostMoneyWon() {
+        return mostMoneyWon;
+    }
+
+    public void setMostMoneyWon(double mostMoneyWon) {
+        this.mostMoneyWon = mostMoneyWon;
+    }
+
+    public double getMostMoneyLost() {
+        return mostMoneyLost;
+    }
+
+    public void setMostMoneyLost(double mostMoneyLost) {
+        this.mostMoneyLost = mostMoneyLost;
+    }
+
+    public String getUserMostMoneyWon() {
+        return userMostMoneyWon;
+    }
+
+    public void setUserMostMoneyWon(String userMostMoneyWon) {
+        this.userMostMoneyWon = userMostMoneyWon;
+    }
+
+    public String getUserMostMoneyLost() {
+        return userMostMoneyLost;
+    }
+
+    public void setUserMostMoneyLost(String userMostMoneyLost) {
+        this.userMostMoneyLost = userMostMoneyLost;
     }
 
     public boolean isUserLoggedIn() {
