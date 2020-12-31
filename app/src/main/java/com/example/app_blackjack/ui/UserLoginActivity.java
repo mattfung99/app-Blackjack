@@ -19,7 +19,7 @@ import java.util.Objects;
 
 public class UserLoginActivity extends AppCompatActivity {
     // Reference the singleton instance
-    private DataHandler dHandler = DataHandler.getInstance();
+    private final DataHandler dHandler = DataHandler.getInstance();
 
     // UI Widgets
     private EditText eTextUsername;

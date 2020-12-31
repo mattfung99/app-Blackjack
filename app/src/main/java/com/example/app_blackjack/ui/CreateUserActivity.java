@@ -38,7 +38,7 @@ import java.util.Objects;
 
 public class CreateUserActivity extends AppCompatActivity {
     // Reference the singleton instance
-    private DataHandler dHandler = DataHandler.getInstance();
+    private final DataHandler dHandler = DataHandler.getInstance();
     private User user;
 
     // Flags
@@ -58,6 +58,7 @@ public class CreateUserActivity extends AppCompatActivity {
     private TextView textInvalidUsername;
     private TextView textInvalidPassword;
     private TextView textInvalidRePassword;
+    private Button btnSaveUser;
 
     // Boolean Flags
     private boolean isValidUsername;
@@ -81,13 +82,17 @@ public class CreateUserActivity extends AppCompatActivity {
     }
 
     private void displayActivityState() {
+        btnSaveUser = findViewById(R.id.btnCreateUser);
         setupUserProfile();
         if (getIntent().getBooleanExtra("edit", false)) {
             setTitle(getString(R.string.edit_user_activity_name));
             user = dHandler.getUser();
+            eTextUsername.setText(user.getUsername());
+            btnSaveUser.setText(getString(R.string.btn_save_changes));
             displayEditSelectedImage();
         } else {
             setTitle(getString(R.string.create_user_activity_name));
+            btnSaveUser.setText(getString(R.string.btn_create_user));
             displayAddSelectedImage();
         }
     }
@@ -168,7 +173,8 @@ public class CreateUserActivity extends AppCompatActivity {
             textInvalidUsername.setText(getString(R.string.invalid_username_contains_space));
             textInvalidUsername.setTextColor(ContextCompat.getColor(this, R.color.invalid_red));
             return false;
-        } else if (keyFromPref != null || eTextUsername.getText().toString().matches("error")) {
+        } else if ((!getIntent().getBooleanExtra("edit", false)) &&
+                (keyFromPref != null || eTextUsername.getText().toString().matches("error"))) {
             textInvalidUsername.setText(getString(R.string.invalid_username_taken));
             textInvalidUsername.setTextColor(ContextCompat.getColor(this, R.color.invalid_red));
             return false;
@@ -229,8 +235,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
     private void setupSaveUserButton() {
         // Save User
-        Button buttonSaveChild = findViewById(R.id.btnCreateUser);
-        buttonSaveChild.setOnClickListener(v -> {
+        btnSaveUser.setOnClickListener(v -> {
             if (getIntent().getBooleanExtra("edit", false)) {
                 editUser();
             } else {
@@ -254,42 +259,42 @@ public class CreateUserActivity extends AppCompatActivity {
         if (!isValidUsername || !isValidPassword || !isValidRePassword) {
             Toast.makeText(this, getString(R.string.toast_invalid_input), Toast.LENGTH_SHORT).show();
         } else {
-            User newUser;
-            if (FLAG_PHOTO_MODIFIED) {
-                newUser = new User(eTextUsername.getText().toString(), eTextPassword.getText().toString(), photoPath.toString());
-            } else {
-                newUser = new User(eTextUsername.getText().toString(), eTextPassword.getText().toString(), getString(R.string.empty_file_path));
-            }
+            User newUser = new User(eTextUsername.getText().toString(), eTextPassword.getText().toString(), getString(R.string.empty_string));
+            newUser.setFilepath(FLAG_PHOTO_MODIFIED ?
+                    photoPath.toString() :
+                    newUser.getFilepath()
+            );
             saveUserIntoSharedPref(newUser);
             Toast.makeText(this, getString(R.string.toast_user_created), Toast.LENGTH_SHORT).show();
-            saveConstantIntoSharedPref();                                                           // Save the Photo ID constant into shared prefs
+            saveConstantIntoSharedPref();
             finish();
         }
     }
 
-    // To be implemented
     private void editUser() {
-//        Intent intent = getIntent();
-//        Child child = manager.getChild(intent.getIntExtra("child", 0));
-//        String name = childNameEditText.getText().toString();
-//        if (name.equals(getString(R.string.invalid_input_add_children))) {
-//            Toast.makeText(this, getString(R.string.invalid_input_toast), Toast.LENGTH_SHORT).show();
-//        } else {
-//            String existingName = child.getName();
-//            child.setName(name);
-//            child.setPath(FLAG_PHOTO_MODIFIED ?                                                 // Checks if the user has set a profile picture for the child
-//                    photoPath.toString() :                                                      // Will store the path of the current set profile photo
-//                    child.getPath()                                                             // Will retain the unchanged path
-//            );
-//            manager.updateTasks(existingName, child);                                           // Update each child in every task's queue
-//            Toast.makeText(this, getString(R.string.toast_edited_child), Toast.LENGTH_SHORT).show();
-//            saveConstantIntoSharedPref();                                                           // Save the Photo ID constant into shared prefs
-//            finish();
-//        }
+        String newUsername = eTextUsername.getText().toString();
+        if (!isValidUsername || !isValidPassword || !isValidRePassword) {
+            Toast.makeText(this, getString(R.string.toast_invalid_input_edit), Toast.LENGTH_SHORT).show();
+        } else {
+            user.setUsername(newUsername);
+            user.setPassword(eTextPassword.getText().toString());
+            user.setFilepath(FLAG_PHOTO_MODIFIED ?
+                    photoPath.toString() :
+                    user.getFilepath()
+            );
+            saveUserIntoSharedPref(user);
+            Toast.makeText(this, getString(R.string.toast_changes_saved), Toast.LENGTH_SHORT).show();
+            saveConstantIntoSharedPref();
+            finish();
+        }
     }
 
     private void deleteUser() {
-        // To be implemented
+        deleteUserFromSharedPref();
+        dHandler.setUser(new User("error", "error404", ""));
+        dHandler.setUserLoggedIn(false);
+        saveLoggedOutSessionIntoSharedPref(false);
+        Toast.makeText(this, getString(R.string.toast_user_deleted), Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -367,6 +372,13 @@ public class CreateUserActivity extends AppCompatActivity {
         return Uri.parse(createFile.getAbsolutePath());
     }
 
+    private void deleteUserFromSharedPref() {
+        SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
+        SharedPreferences.Editor userEditor = userPref.edit();
+        userEditor.remove(dHandler.getUser().getUsername());
+        userEditor.apply();
+    }
+
     private void saveUserIntoSharedPref(User newUser) {
         SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPref.edit();
@@ -381,6 +393,14 @@ public class CreateUserActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("photoIDNum", PHOTO_ID_NUM);
         editor.apply();
+    }
+
+    private void saveLoggedOutSessionIntoSharedPref(boolean userNotLoggedOut) {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences.Editor sessionEditor = sessionPref.edit();
+        sessionEditor.putString("userSessionKey", "error");
+        sessionEditor.putBoolean("userLoggedIn", userNotLoggedOut);
+        sessionEditor.apply();
     }
 
     private void retrieveConstantFromSharedPref() {
