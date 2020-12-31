@@ -87,7 +87,7 @@ public class CreateUserActivity extends AppCompatActivity {
         if (getIntent().getBooleanExtra("edit", false)) {
             setTitle(getString(R.string.edit_user_activity_name));
             user = dHandler.getUser();
-            eTextUsername.setText(user.getUsername());
+            setDefaultFields();
             btnSaveUser.setText(getString(R.string.btn_save_changes));
             displayEditSelectedImage();
         } else {
@@ -95,6 +95,12 @@ public class CreateUserActivity extends AppCompatActivity {
             btnSaveUser.setText(getString(R.string.btn_create_user));
             displayAddSelectedImage();
         }
+    }
+
+    private void setDefaultFields() {
+        eTextUsername.setText(user.getUsername());
+        eTextPassword.setText(user.getPassword());
+        eTextRePassword.setText(user.getPassword());
     }
 
     private void displayEditSelectedImage() {

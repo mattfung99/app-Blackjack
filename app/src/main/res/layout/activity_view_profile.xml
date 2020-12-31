@@ -8,7 +8,7 @@
     android:background="@drawable/menu_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_account_fields"
+        android:id="@+id/layout_view_profile"
         android:layout_width="500dp"
         android:layout_height="300dp"
         android:background="#FFFFFF"
@@ -18,150 +18,133 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9">
 
+
         <TextView
-            android:id="@+id/textEnterUsername"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_label_user_statistics"
+            android:layout_width="143dp"
             android:layout_height="wrap_content"
-            android:text="@string/text_enter_username"
+            android:text="@string/display_label_user_stats"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintHorizontal_bias="0.042"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05" />
-
-        <EditText
-            android:id="@+id/editTextEnterUsername"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/hint_username_limit"
-            android:inputType="textPersonName"
-            android:maxLength="16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.086"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.129" />
+            app:layout_constraintVertical_bias="0.057" />
 
         <TextView
-            android:id="@+id/textUsernameTaken"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_display_most_money_won"
+            android:layout_width="296dp"
             android:layout_height="wrap_content"
-            android:textColor="#F44336"
-            android:textSize="12sp"
-            android:textStyle="italic"
+            android:text="@string/display_most_money_won"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_bias="0.073"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.277" />
+            app:layout_constraintVertical_bias="0.163" />
 
         <TextView
-            android:id="@+id/textEnterPassword"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_display_most_money_lost"
+            android:layout_width="296dp"
             android:layout_height="wrap_content"
-            android:text="@string/text_enter_password"
+            android:text="@string/display_most_money_lost"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.073"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.259" />
+
+        <TextView
+            android:id="@+id/text_display_games_won"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:text="@string/display_games_won"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.073"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.355" />
+
+        <TextView
+            android:id="@+id/text_display_games_lost"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:text="@string/display_games_lost"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.073"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.451" />
+
+        <TextView
+            android:id="@+id/text_display_games_forfeited"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:text="@string/display_games_forfeited"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.073"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.547" />
+
+        <TextView
+            android:id="@+id/text_display_bankrupts"
+            android:layout_width="296dp"
+            android:layout_height="wrap_content"
+            android:text="@string/display_bankrupts"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.073"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.643" />
+
+        <TextView
+            android:id="@+id/text_label_all_time_statistics"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:text="@string/display_label_all_time_stats"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.08"
+            app:layout_constraintHorizontal_bias="0.044"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.345" />
-
-        <EditText
-            android:id="@+id/editTextEnterPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/hint_password_limit"
-            android:inputType="textPassword"
-            android:maxLength="16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.086"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.454" />
+            app:layout_constraintVertical_bias="0.741" />
 
         <TextView
-            android:id="@+id/textInvalidPassword"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_display_all_time_most_money_won"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:textColor="#F44336"
-            android:textSize="12sp"
-            android:textStyle="italic"
+            android:text="@string/display_most_money_won_all_time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintHorizontal_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.572" />
+            app:layout_constraintVertical_bias="0.846" />
 
         <TextView
-            android:id="@+id/textReenterPassword"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_display_all_time_most_money_lost"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            android:text="@string/text_reenter_password"
-            android:textStyle="bold"
+            android:text="@string/display_most_money_lost_all_time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.063"
+            app:layout_constraintHorizontal_bias="0.16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.64" />
-
-        <EditText
-            android:id="@+id/editTextReenterPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:ems="10"
-            android:hint="@string/hint_username_limit"
-            android:inputType="textPassword"
-            android:maxLength="16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.086"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.78" />
-
-        <TextView
-            android:id="@+id/textInvalidRePassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#F44336"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.871" />
-
-        <Button
-            android:id="@+id/btnCreateUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_create_user"
-            android:textColor="@color/default_text_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.97" />
+            app:layout_constraintVertical_bias="0.943" />
 
         <ImageView
-            android:id="@+id/user_profile_picture"
+            android:id="@+id/user_display_profile_picture"
             android:layout_width="143dp"
             android:layout_height="123dp"
             android:contentDescription="@string/todo"
@@ -173,32 +156,43 @@
             app:layout_constraintVertical_bias="0.09"
             app:srcCompat="@drawable/default_user" />
 
-        <Button
-            android:id="@+id/btnSelectPhoto"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/text_label_user_details"
+            android:layout_width="143dp"
             android:layout_height="wrap_content"
-            android:text="@string/btn_select_photo"
-            android:textColor="@color/default_text_color"
+            android:text="@string/display_label_user_details"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.887"
+            app:layout_constraintHorizontal_bias="0.882"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.583" />
+            app:layout_constraintVertical_bias="0.521" />
 
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/text_display_username"
+            android:layout_width="143dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#F44336"
-            android:text="@string/btn_delete_user"
-            android:textColor="@color/default_text_color"
+            android:text="@string/display_username"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.87"
+            app:layout_constraintHorizontal_bias="0.882"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.793" />
+            app:layout_constraintVertical_bias="0.622" />
+
+        <TextView
+            android:id="@+id/text_display_balance"
+            android:layout_width="143dp"
+            android:layout_height="wrap_content"
+            android:text="@string/display_balance"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.882"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.733" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

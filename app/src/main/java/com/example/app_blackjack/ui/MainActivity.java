@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.example.app_blackjack.model.User;
@@ -138,9 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(editUserIntent);
                 break;
             case R.id.action_view_profile:
-//                Intent viewProfileIntent = ViewProfileActivity.makeIntent(MainActivity.this);
-//                startActivity(viewProfileIntent);
-//                break;
+                Intent viewProfileIntent = ViewProfileActivity.makeIntent(MainActivity.this);
+                startActivity(viewProfileIntent);
+                break;
             case R.id.action_sign_out:
                 dHandler.setUser(new User("error", "error404", ""));
                 dHandler.setUserLoggedIn(false);
