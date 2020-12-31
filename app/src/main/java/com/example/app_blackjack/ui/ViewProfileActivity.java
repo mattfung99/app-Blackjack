@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class ViewProfileActivity extends AppCompatActivity {
     // Reference the singleton instance
-    private DataHandler dHandler = DataHandler.getInstance();
+    private final DataHandler dHandler = DataHandler.getInstance();
     private User user;
 
     // UI Widgets
