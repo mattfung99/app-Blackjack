@@ -8,7 +8,7 @@
     android:background="@drawable/menu_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_account_fields"
+        android:id="@+id/layout_testing_board"
         android:layout_width="500dp"
         android:layout_height="300dp"
         android:background="#FFFFFF"

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.example.app_blackjack.model.User;
+import com.example.app_blackjack.prototype.DeckTesterActivity;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -98,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupStartButton() {
+        Button btnStart = (Button)findViewById(R.id.btnMenuStart);
+        btnStart.setOnClickListener(v -> {
+            Intent intent = DeckTesterActivity.makeIntent(MainActivity.this);
+            startActivity(intent);
+        });
     }
 
     private void setupRestartButton() {
