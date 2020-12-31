@@ -75,4 +75,22 @@
     <string name="invalid_password">Invalid password</string>
     <string name="toast_login_successful">Login successful</string>
     <string name="toast_logout_successful">Logout successful</string>
+
+    <!--  ViewProfileActivity  -->
+    <string name="view_profile_activity_name">ViewProfileActivity</string>
+    <string name="display_label_user_stats">User Statistics</string>
+    <string name="display_most_money_won">Most money won in a game: $%.2f</string>
+    <string name="display_most_money_lost">Most money lost in a game: $%.2f</string>
+    <string name="display_games_won">Number of games won: %d</string>
+    <string name="display_games_lost">Number of games lost: %d</string>
+    <string name="display_games_forfeited">Number of games forfeited: %d</string>
+    <string name="display_bankrupts">Number of times gone bankrupted: %d</string>
+    <string name="display_label_all_time_stats">All-Time Statistics</string>
+    <string name="display_most_money_won_all_time">Most money won in a game (any user): $%.2f %s</string>
+    <string name="display_most_money_lost_all_time">Most money lost in a game (any user): $%.2f %s</string>
+    <string name="display_most_money_won_all_time_default">Most money won in a game (any user): $0 (No record yet)</string>
+    <string name="display_most_money_lost_all_time_default">Most money lost in a game (any user): $0 (No record yet)</string>
+    <string name="display_label_user_details">User Details</string>
+    <string name="display_username">Username: %s</string>
+    <string name="display_balance">Balance: $%.2f</string>
 </resources>
