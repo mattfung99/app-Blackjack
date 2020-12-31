@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.App_blackjack">
         <activity
@@ -38,6 +38,14 @@
         <activity
             android:name=".ui.ViewProfileActivity"
             android:label="@string/view_profile_activity_name"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.App_blackjack" />
+
+        <!-- Prototype -->
+        <activity
+            android:name=".prototype.DeckTesterActivity"
+            android:label="@string/deck_tester_activity_name"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
