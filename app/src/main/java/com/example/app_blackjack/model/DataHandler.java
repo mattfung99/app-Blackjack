@@ -5,6 +5,7 @@ public class DataHandler {
     private static DataHandler instance;
     private User user;
     private Game game;
+    private int numDecks;
     private double mostMoneyWon;
     private double mostMoneyLost;
     private String userMostMoneyWon;
@@ -34,6 +35,14 @@ public class DataHandler {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public int getNumDecks() {
+        return numDecks;
+    }
+
+    public void setNumDecks(int numDecks) {
+        this.numDecks = numDecks;
     }
 
     public double getMostMoneyWon() {

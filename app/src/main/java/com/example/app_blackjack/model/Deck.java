@@ -84,19 +84,19 @@ public class Deck {
     @NotNull
     @Override
     public String toString() {
-        StringBuilder deckOutput = new StringBuilder();
-//        deckOutput.append("Deck:\n");
-        deckOutput.append(createDeckStringOutput(deckOutput, this.playingDeck));
-//        deckOutput.append("\n\nUsed Deck:\n");
-        deckOutput.append(createDeckStringOutput(deckOutput, this.usedDeck));
-        return deckOutput.toString();
+        return "Playing Deck\n" + createDeckStringOutput(true) + "\nUsed Deck" + createDeckStringOutput(false);
     }
 
-    private StringBuilder createDeckStringOutput(StringBuilder deckOutput, ArrayList<Card> currDeck) {
-        for (Card c : currDeck) {
-            deckOutput.append(c.getCardID()).append(" ").append(c.getCardValue()).append("\n");
+    public void createDeckStringOutput() {
+        System.out.println(createDeckStringOutput(false));
+    }
+
+    private StringBuilder createDeckStringOutput(boolean deckIndicator) {
+        StringBuilder output = new StringBuilder();
+        for (Card c : (deckIndicator ? playingDeck : usedDeck)) {
+            output.append(c.getCardID()).append(" ").append(c.getCardValue()).append("\n");
         }
-        return deckOutput;
+        return output;
     }
 
     private String fetchSuitValue(Suit suit) {

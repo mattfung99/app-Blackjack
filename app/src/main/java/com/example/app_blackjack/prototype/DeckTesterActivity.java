@@ -37,6 +37,7 @@ public class DeckTesterActivity extends AppCompatActivity {
             displayCardName.setText(getString(R.string.test_display_card_name, cardDrawn.getCardID()));
             int resID = getResources().getIdentifier(cardDrawn.getCardID() , "drawable", getPackageName());
             displayCard.setImageResource(resID);
+            System.out.println(deck.getUsedDeck().get(deck.getNumCardsUsed() - 1).getCardID());
         });
     }
 

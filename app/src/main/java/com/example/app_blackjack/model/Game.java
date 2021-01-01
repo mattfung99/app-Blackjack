@@ -25,15 +25,13 @@ public class Game {
         this.deck = deck;
     }
 
-    public Deck createMultiDeck(Deck currDeck, int numDecks) {
+    public void createMultiDeck(int numDecks) {
+        Deck tempDeck;
         for (int i = 0; i < numDecks; i++) {
-            Deck tempDeck = new Deck();
+            tempDeck = new Deck();
             tempDeck.createDeck();
-            currDeck.getPlayingDeck().addAll(tempDeck.getPlayingDeck());
-            System.out.println(currDeck);
-            System.out.println("Iteration: " + i);
+            deck.getPlayingDeck().addAll(tempDeck.getPlayingDeck());
         }
-        return currDeck;
     }
 
     public int getUserScore() {

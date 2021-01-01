@@ -36,12 +36,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Testing only
         dHandler.setGame(new Game());
+        dHandler.setNumDecks(3);
+
+        System.out.println("create hit");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Bug is right here
         invalidateOptionsMenu();
+        System.out.println("resume hit");
     }
 
     @Override
