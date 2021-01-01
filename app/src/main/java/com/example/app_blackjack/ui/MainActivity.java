@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
+import com.example.app_blackjack.model.Game;
 import com.example.app_blackjack.model.User;
 import com.example.app_blackjack.prototype.DeckTesterActivity;
+import com.example.app_blackjack.prototype.GameTesterActivity;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +24,7 @@ import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     // Reference the singleton instance
-    DataHandler dHandler = DataHandler.getInstance();
+    private final DataHandler dHandler = DataHandler.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         retrieveUserSessionFromSharedPref();
         retrieveStatsFromSharedPref();
+
+        // Testing only
+        dHandler.setGame(new Game());
     }
 
     @Override
@@ -107,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupRestartButton() {
+        Button btnRestart = (Button)findViewById(R.id.btnMenuRestart);
+        btnRestart.setOnClickListener(v -> {
+            Intent intent = GameTesterActivity.makeIntent(MainActivity.this);
+            startActivity(intent);
+        });
     }
 
     private void setupOptionsButton() {

@@ -10,6 +10,8 @@ public class DataHandler {
     private String userMostMoneyWon;
     private String userMostMoneyLost;
     private boolean userLoggedIn;
+    private boolean userGameStarted;
+    private boolean randomGameStarted;
     private boolean dataLoadedFromSharedPref;
 
     public static DataHandler getInstance() {
@@ -28,6 +30,10 @@ public class DataHandler {
 
     public Game getGame() {
         return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public double getMostMoneyWon() {
@@ -68,6 +74,22 @@ public class DataHandler {
 
     public void setUserLoggedIn(boolean userLoggedIn) {
         this.userLoggedIn = userLoggedIn;
+    }
+
+    public boolean isUserGameStarted() {
+        return userGameStarted;
+    }
+
+    public void setUserGameStarted(boolean userGameStarted) {
+        this.userGameStarted = userGameStarted;
+    }
+
+    public boolean isRandomGameStarted() {
+        return randomGameStarted;
+    }
+
+    public void setRandomGameStarted(boolean randomGameStarted) {
+        this.randomGameStarted = randomGameStarted;
     }
 
     public boolean isDataLoadedFromSharedPref() {

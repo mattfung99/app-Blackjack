@@ -27,11 +27,11 @@ public class Deck {
         ACE,
     }
 
-    private final ArrayList<Card> deck;
+    private final ArrayList<Card> playingDeck;
     private final ArrayList<Card> usedDeck;
 
     public Deck() {
-        this.deck = new ArrayList<>();
+        this.playingDeck = new ArrayList<>();
         this.usedDeck = new ArrayList<>();
     }
 
@@ -39,32 +39,32 @@ public class Deck {
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 Card card = new Card(suit, rank, fetchID(suit, rank), fetchValue(rank));
-                deck.add(card);
+                playingDeck.add(card);
             }
         }
     }
 
     public void shuffleDeck() {
-        Collections.shuffle(this.deck);
+        Collections.shuffle(this.playingDeck);
     }
 
     public Card drawCard() {
-        Card cardDrawn = deck.get(0);
+        Card cardDrawn = playingDeck.get(0);
         usedDeck.add(cardDrawn);
-        deck.remove(0);
+        playingDeck.remove(0);
         return cardDrawn;
     }
 
     public boolean isDeckEmpty() {
-        return deck.isEmpty();
+        return playingDeck.isEmpty();
     }
 
-    public ArrayList<Card> getDeck() {
-        return deck;
+    public ArrayList<Card> getPlayingDeck() {
+        return playingDeck;
     }
 
     public int getNumCardsRemaining() {
-        return deck.size();
+        return playingDeck.size();
     }
 
     public ArrayList<Card> getUsedDeck() {
@@ -83,13 +83,20 @@ public class Deck {
 
     @NotNull
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder deckOutput = new StringBuilder();
-        for (Card c : deck) {
+//        deckOutput.append("Deck:\n");
+        deckOutput.append(createDeckStringOutput(deckOutput, this.playingDeck));
+//        deckOutput.append("\n\nUsed Deck:\n");
+        deckOutput.append(createDeckStringOutput(deckOutput, this.usedDeck));
+        return deckOutput.toString();
+    }
+
+    private StringBuilder createDeckStringOutput(StringBuilder deckOutput, ArrayList<Card> currDeck) {
+        for (Card c : currDeck) {
             deckOutput.append(c.getCardID()).append(" ").append(c.getCardValue()).append("\n");
         }
-        return deckOutput.toString();
+        return deckOutput;
     }
 
     private String fetchSuitValue(Suit suit) {
