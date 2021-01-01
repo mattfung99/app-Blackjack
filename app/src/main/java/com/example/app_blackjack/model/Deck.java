@@ -59,10 +59,37 @@ public class Deck {
         return deck.isEmpty();
     }
 
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
+
+    public int getNumCardsRemaining() {
+        return deck.size();
+    }
+
+    public ArrayList<Card> getUsedDeck() {
+        return usedDeck;
+    }
+
+    public int getNumCardsUsed() {
+        return usedDeck.size();
+    }
+
     private String fetchID(Suit suit, Rank rank) {
         return (rank == Rank.JACK || rank == Rank.QUEEN || rank == Rank.KING || rank == Rank.ACE) ?
                 fetchSuitValue(suit).concat(fetchAlternateValue(rank)) :
                 fetchSuitValue(suit).concat(Integer.toString(fetchValue(rank)));
+    }
+
+    @NotNull
+    @Override
+    public String toString()
+    {
+        StringBuilder deckOutput = new StringBuilder();
+        for (Card c : deck) {
+            deckOutput.append(c.getCardID()).append(" ").append(c.getCardValue()).append("\n");
+        }
+        return deckOutput.toString();
     }
 
     private String fetchSuitValue(Suit suit) {
@@ -82,28 +109,12 @@ public class Deck {
 
     private int fetchValue(Rank rank) {
         switch (rank) {
-            case TWO:
-                return 2;
-            case THREE:
-                return 3;
-            case FOUR:
-                return 4;
-            case FIVE:
-                return 5;
-            case SIX:
-                return 6;
-            case SEVEN:
-                return 7;
-            case EIGHT:
-                return 8;
-            case NINE:
-                return 9;
-            case TEN: case JACK: case QUEEN: case KING:
+            case JACK: case QUEEN: case KING:
                 return 10;
             case ACE:
                 return 11;
             default:
-                return -1;
+                return rank.ordinal() + 2;
         }
     }
 
@@ -122,16 +133,5 @@ public class Deck {
             default:
                 return "error";
         }
-    }
-
-    @NotNull
-    @Override
-    public String toString()
-    {
-        StringBuilder deckOutput = new StringBuilder();
-        for (Card c : deck) {
-            deckOutput.append(c.getCardID()).append(" ").append(c.getCardValue()).append("\n");
-        }
-        return deckOutput.toString();
     }
 }

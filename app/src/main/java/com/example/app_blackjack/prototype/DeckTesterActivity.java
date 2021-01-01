@@ -23,7 +23,7 @@ public class DeckTesterActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         deck = new Deck();
         deck.createDeck();
-        deck.shuffleDeck();
+//        deck.shuffleDeck();
         System.out.println(deck);
         setupDrawBtn();
     }
