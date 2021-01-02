@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
+import com.example.app_blackjack.model.Game;
 import com.example.app_blackjack.model.User;
 import com.example.app_blackjack.prototype.DeckTesterActivity;
+import com.example.app_blackjack.prototype.GameTesterActivity;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,15 +24,17 @@ import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     // Reference the singleton instance
-    DataHandler dHandler = DataHandler.getInstance();
+    private final DataHandler dHandler = DataHandler.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupButtons();
-        retrieveUserSessionFromSharedPref();
-        retrieveStatsFromSharedPref();
+        if (!dHandler.isUserSessionLoadedFromSharedPref()) {
+            retrieveUserSessionFromSharedPref();
+            retrieveStatsFromSharedPref();
+        }
     }
 
     @Override
@@ -53,14 +57,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateOptionsMenu(Menu menu) {
+        System.out.println("userLoggedIn: " + dHandler.isUserLoggedIn());
+        System.out.println("isUserGameStarted: " + dHandler.isUserGameStarted());
+        System.out.println("isRandomUserGameStarted: " + dHandler.isRandomGameStarted());
+        System.out.println("isUserLoadedFromSharedPref: " + dHandler.isUserLoadedFromSharedPref());
+        System.out.println("isNonUserLoadedFromSharedPref: " + dHandler.isNonUserLoadedFromSharedPref());
+
         if (dHandler.isUserLoggedIn()) {
-            if (!dHandler.isDataLoadedFromSharedPref()) {
+            if (!dHandler.isUserLoadedFromSharedPref()) {
                 retrieveUserFromSharedPref();
+                retrieveGameFromSharedPref(dHandler.isUserLoggedIn());
             }
             getMenuInflater().inflate(R.menu.logged_in_main, menu);
             displayProfilePicture(menu);
             menu.findItem(R.id.user_profile).setTitle(dHandler.getUser().getUsername());
         } else {
+            if (!dHandler.isNonUserLoadedFromSharedPref()) {
+                if (dHandler.isRandomGameStarted()) {
+                    retrieveGameFromSharedPref(dHandler.isUserLoggedIn());
+                }
+                dHandler.setNonUserLoadedFromSharedPref(true);
+            }
+            retrieveSessionOptions();
             getMenuInflater().inflate(R.menu.not_logged_in_main, menu);
         }
     }
@@ -107,6 +125,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupRestartButton() {
+        Button btnRestart = (Button)findViewById(R.id.btnMenuRestart);
+        btnRestart.setOnClickListener(v -> {
+            Intent intent = GameTesterActivity.makeIntent(MainActivity.this);
+            startActivity(intent);
+        });
     }
 
     private void setupOptionsButton() {
@@ -150,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_sign_out:
                 dHandler.setUser(new User("error", "error404", ""));
                 dHandler.setUserLoggedIn(false);
+                retrieveSessionOptions();
+                retrieveGameFromSharedPref(dHandler.isUserLoggedIn());
                 saveLoggedOutSessionIntoSharedPref(false);
                 Toast.makeText(this, getString(R.string.toast_logout_successful), Toast.LENGTH_SHORT).show();
                 finish();
@@ -159,6 +184,21 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void retrieveGameFromSharedPref(boolean userLoggedIn) {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences gamePref = getSharedPreferences("PREF_GAMES", MODE_PRIVATE);
+        Gson gson = new Gson();
+        if (userLoggedIn) {
+            String json = gamePref.getString(sessionPref.getString("userGameSessionKey", null), "error");
+            Game currGame = gson.fromJson(json, Game.class);
+            dHandler.setGame(currGame);
+        } else {
+            String json = gamePref.getString("randomGame", "error");
+            Game currGame = gson.fromJson(json, Game.class);
+            dHandler.setGame(currGame);
+        }
+    }
+
     private void retrieveUserFromSharedPref() {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
@@ -166,12 +206,21 @@ public class MainActivity extends AppCompatActivity {
         String json = userPref.getString(sessionPref.getString("userSessionKey", "error"), "error");
         User currUser = gson.fromJson(json, User.class);
         dHandler.setUser(currUser);
-        dHandler.setDataLoadedFromSharedPref(true);
+        dHandler.setUserLoadedFromSharedPref(true);
     }
 
     private void retrieveUserSessionFromSharedPref() {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         dHandler.setUserLoggedIn(sessionPref.getBoolean("userLoggedIn", false));
+        dHandler.setUserGameStarted(sessionPref.getBoolean("userGameStarted", false));
+        dHandler.setRandomGameStarted(sessionPref.getBoolean("randomGameStarted", false));
+        dHandler.setUserSessionLoadedFromSharedPref(true);
+    }
+
+    private void retrieveSessionOptions() {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        dHandler.setDefaultNumDecks(sessionPref.getInt("defaultSettingsNumDecks", 1));
+        dHandler.setDefaultChosenCardDesign(sessionPref.getString("defaultSettingsCardDesign", "blue"));
     }
 
     private void retrieveStatsFromSharedPref() {

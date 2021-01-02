@@ -5,12 +5,18 @@ public class DataHandler {
     private static DataHandler instance;
     private User user;
     private Game game;
+    private int defaultNumDecks;
+    private String defaultChosenCardDesign;
     private double mostMoneyWon;
     private double mostMoneyLost;
     private String userMostMoneyWon;
     private String userMostMoneyLost;
     private boolean userLoggedIn;
-    private boolean dataLoadedFromSharedPref;
+    private boolean userGameStarted;
+    private boolean randomGameStarted;
+    private boolean userSessionLoadedFromSharedPref;
+    private boolean userLoadedFromSharedPref;
+    private boolean nonUserLoadedFromSharedPref;
 
     public static DataHandler getInstance() {
         if (instance == null)
@@ -28,6 +34,26 @@ public class DataHandler {
 
     public Game getGame() {
         return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public int getDefaultNumDecks() {
+        return defaultNumDecks;
+    }
+
+    public void setDefaultNumDecks(int defaultNumDecks) {
+        this.defaultNumDecks = defaultNumDecks;
+    }
+
+    public String getDefaultChosenCardDesign() {
+        return defaultChosenCardDesign;
+    }
+
+    public void setDefaultChosenCardDesign(String defaultChosenCardDesign) {
+        this.defaultChosenCardDesign = defaultChosenCardDesign;
     }
 
     public double getMostMoneyWon() {
@@ -70,11 +96,43 @@ public class DataHandler {
         this.userLoggedIn = userLoggedIn;
     }
 
-    public boolean isDataLoadedFromSharedPref() {
-        return dataLoadedFromSharedPref;
+    public boolean isUserGameStarted() {
+        return userGameStarted;
     }
 
-    public void setDataLoadedFromSharedPref(boolean dataLoadedFromSharedPref) {
-        this.dataLoadedFromSharedPref = dataLoadedFromSharedPref;
+    public void setUserGameStarted(boolean userGameStarted) {
+        this.userGameStarted = userGameStarted;
+    }
+
+    public boolean isRandomGameStarted() {
+        return randomGameStarted;
+    }
+
+    public void setRandomGameStarted(boolean randomGameStarted) {
+        this.randomGameStarted = randomGameStarted;
+    }
+
+    public boolean isUserSessionLoadedFromSharedPref() {
+        return userSessionLoadedFromSharedPref;
+    }
+
+    public void setUserSessionLoadedFromSharedPref(boolean userSessionLoadedFromSharedPref) {
+        this.userSessionLoadedFromSharedPref = userSessionLoadedFromSharedPref;
+    }
+
+    public boolean isUserLoadedFromSharedPref() {
+        return userLoadedFromSharedPref;
+    }
+
+    public void setUserLoadedFromSharedPref(boolean userLoadedFromSharedPref) {
+        this.userLoadedFromSharedPref = userLoadedFromSharedPref;
+    }
+
+    public boolean isNonUserLoadedFromSharedPref() {
+        return nonUserLoadedFromSharedPref;
+    }
+
+    public void setNonUserLoadedFromSharedPref(boolean nonUserLoadedFromSharedPref) {
+        this.nonUserLoadedFromSharedPref = nonUserLoadedFromSharedPref;
     }
 }

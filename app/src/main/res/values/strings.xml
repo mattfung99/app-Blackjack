@@ -99,4 +99,8 @@
     <string name="test_display_card_name">Card: %s</string>
     <string name="test_draw">Draw card</string>
 
+    <!--  GameTesterActivity  -->
+    <string name="game_tester_activity_name">GameTesterActivity</string>
+    <string name="test_display_card_name_default">Card: (none)</string>
+
 </resources>

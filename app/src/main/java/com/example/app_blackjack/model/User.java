@@ -5,6 +5,9 @@ public class User {
     private String username;
     private String password;
     private String filepath;
+    private int numDecks;
+    private String chosenCardDesign;
+    private boolean isThisUserGameStarted;
     private double balance;
     private double userMostMoneyWon;
     private double userMostMoneyLost;
@@ -17,6 +20,9 @@ public class User {
         this.username = username;
         this.password = password;
         this.filepath = filepath;
+        this.numDecks = 1;
+        this.chosenCardDesign = "blue";
+        this.isThisUserGameStarted = false;
         this.balance = 5000.00;
         this.userMostMoneyWon = 0;
         this.userMostMoneyLost = 0;
@@ -48,6 +54,30 @@ public class User {
 
     public void setFilepath(String filepath) {
         this.filepath = filepath;
+    }
+
+    public int getNumDecks() {
+        return numDecks;
+    }
+
+    public void setNumDecks(int numDecks) {
+        this.numDecks = numDecks;
+    }
+
+    public String getChosenCardDesign() {
+        return chosenCardDesign;
+    }
+
+    public void setChosenCardDesign(String chosenCardDesign) {
+        this.chosenCardDesign = chosenCardDesign;
+    }
+
+    public boolean isThisUserGameStarted() {
+        return isThisUserGameStarted;
+    }
+
+    public void setThisUserGameStarted(boolean thisUserGameStarted) {
+        isThisUserGameStarted = thisUserGameStarted;
     }
 
     public double getBalance() {

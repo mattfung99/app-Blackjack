@@ -49,7 +49,12 @@
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
-
+        <activity
+            android:name=".prototype.GameTesterActivity"
+            android:label="@string/game_tester_activity_name"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.App_blackjack" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

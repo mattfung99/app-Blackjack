@@ -22,6 +22,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.example.app_blackjack.model.Game;
 import com.google.gson.Gson;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
@@ -180,7 +182,9 @@ public class CreateUserActivity extends AppCompatActivity {
             textInvalidUsername.setTextColor(ContextCompat.getColor(this, R.color.invalid_red));
             return false;
         } else if ((!getIntent().getBooleanExtra("edit", false)) &&
-                (keyFromPref != null || eTextUsername.getText().toString().matches("error"))) {
+                (keyFromPref != null ||
+                        eTextUsername.getText().toString().matches("error") ||
+                        eTextUsername.getText().toString().matches("randomGame"))) {
             textInvalidUsername.setText(getString(R.string.invalid_username_taken));
             textInvalidUsername.setTextColor(ContextCompat.getColor(this, R.color.invalid_red));
             return false;
@@ -271,6 +275,7 @@ public class CreateUserActivity extends AppCompatActivity {
                     newUser.getFilepath()
             );
             saveUserIntoSharedPref(newUser);
+            saveGameIntoSharedPref(null, newUser.getUsername());
             Toast.makeText(this, getString(R.string.toast_user_created), Toast.LENGTH_SHORT).show();
             saveConstantIntoSharedPref();
             finish();
@@ -279,6 +284,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
     private void editUser() {
         String newUsername = eTextUsername.getText().toString();
+        String existingUsername = user.getUsername();
         if (!isValidUsername || !isValidPassword || !isValidRePassword) {
             Toast.makeText(this, getString(R.string.toast_invalid_input_edit), Toast.LENGTH_SHORT).show();
         } else {
@@ -288,6 +294,12 @@ public class CreateUserActivity extends AppCompatActivity {
                     photoPath.toString() :
                     user.getFilepath()
             );
+            if (!newUsername.matches(existingUsername)) {
+                deleteUserFromSharedPref(existingUsername);
+                deleteGameFromSharedPref(existingUsername + "Game");
+                saveUserSessionIntoSharedPref();
+                saveGameIntoSharedPref(dHandler.getGame(), user.getUsername() + "Game");
+            }
             saveUserIntoSharedPref(user);
             Toast.makeText(this, getString(R.string.toast_changes_saved), Toast.LENGTH_SHORT).show();
             saveConstantIntoSharedPref();
@@ -296,7 +308,7 @@ public class CreateUserActivity extends AppCompatActivity {
     }
 
     private void deleteUser() {
-        deleteUserFromSharedPref();
+        deleteUserFromSharedPref(user.getUsername());
         dHandler.setUser(new User("error", "error404", ""));
         dHandler.setUserLoggedIn(false);
         saveLoggedOutSessionIntoSharedPref(false);
@@ -378,20 +390,44 @@ public class CreateUserActivity extends AppCompatActivity {
         return Uri.parse(createFile.getAbsolutePath());
     }
 
-    private void deleteUserFromSharedPref() {
-        SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
+    private void saveUserIntoSharedPref(User newUser) {
+        saveObjIntoSharedPref(newUser, newUser.getUsername(), "PREF_USERS");
+    }
+
+    private void deleteUserFromSharedPref(String deleteUsername) {
+        deleteObjFromSharedPref(deleteUsername, "PREF_USERS");
+    }
+
+    private void saveGameIntoSharedPref(Game currGame, String key) {
+        saveObjIntoSharedPref(currGame, key + "Game", "PREF_GAMES");
+    }
+
+    private void deleteGameFromSharedPref(String deleteGameKey) {
+        deleteObjFromSharedPref(deleteGameKey, "PREF_GAMES");
+    }
+
+    private void saveObjIntoSharedPref(Object obj, String objName, String dir) {
+        SharedPreferences pref = getSharedPreferences(dir, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(obj);
+        editor.putString(objName, json);
+        editor.apply();
+    }
+
+    private void deleteObjFromSharedPref(String objName, String dir) {
+        SharedPreferences userPref = getSharedPreferences(dir, MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPref.edit();
-        userEditor.remove(dHandler.getUser().getUsername());
+        userEditor.remove(objName);
         userEditor.apply();
     }
 
-    private void saveUserIntoSharedPref(User newUser) {
-        SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
-        SharedPreferences.Editor userEditor = userPref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(newUser);
-        userEditor.putString(newUser.getUsername(), json);
-        userEditor.apply();
+    private void saveUserSessionIntoSharedPref() {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences.Editor sessionEditor = sessionPref.edit();
+        sessionEditor.putString("userSessionKey", user.getUsername());
+        sessionEditor.putString("userGameSessionKey", user.getUsername() + "Game");
+        sessionEditor.apply();
     }
 
     private void saveConstantIntoSharedPref() {
