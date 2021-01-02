@@ -133,8 +133,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupOptionsButton() {
-//        Intent optionsIntent = OptionsActivity.makeIntent(MainActivity.this);
-//        startActivity(optionsIntent);
+        Button btnOptions = (Button)findViewById(R.id.btnMenuOptions);
+        btnOptions.setOnClickListener(v -> {
+            Intent optionsIntent = OptionsActivity.makeIntent(MainActivity.this);
+            startActivity(optionsIntent);
+        });
     }
 
     private void setupHelpButton() {

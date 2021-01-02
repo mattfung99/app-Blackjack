@@ -24,6 +24,12 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.OptionsActivity"
+            android:label="@string/options_activity_name"
+            android:parentActivityName=".ui.MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.App_blackjack" />
+        <activity
             android:name=".ui.UserLoginActivity"
             android:label="@string/login_activity_name"
             android:parentActivityName=".ui.MainActivity"
@@ -40,9 +46,7 @@
             android:label="@string/view_profile_activity_name"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.App_blackjack" />
-
-        <!-- Prototype -->
+            android:theme="@style/Theme.App_blackjack" /> <!-- Prototype -->
         <activity
             android:name=".prototype.DeckTesterActivity"
             android:label="@string/deck_tester_activity_name"
@@ -55,6 +59,7 @@
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

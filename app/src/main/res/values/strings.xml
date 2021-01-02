@@ -94,13 +94,20 @@
     <string name="display_username">Username: %s</string>
     <string name="display_balance">Balance: $%.2f</string>
 
+    <!--  OptionsActivity  -->
+    <string name="options_activity_name">Options</string>
+    <string name="text_label_current_options">Current settings configured for: %s</string>
+    <string name="text_label_num_decks">Select Number of Decks</string>
+    <string name="text_label_card_design">Select Card Design Color</string>
+    <string name="btn_clear_data">Clear Data</string>
+
     <!--  DeckTesterActivity  -->
     <string name="deck_tester_activity_name">Deck Tester</string>
     <string name="test_display_card_name">Card: %s</string>
     <string name="test_draw">Draw card</string>
 
     <!--  GameTesterActivity  -->
-    <string name="game_tester_activity_name">GameTesterActivity</string>
+    <string name="game_tester_activity_name">Game Tester</string>
     <string name="test_display_card_name_default">Card: (none)</string>
 
 </resources>
