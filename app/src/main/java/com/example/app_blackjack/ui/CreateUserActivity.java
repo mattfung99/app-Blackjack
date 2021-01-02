@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.example.app_blackjack.model.Game;
 import com.google.gson.Gson;
 import com.example.app_blackjack.R;
@@ -426,7 +425,6 @@ public class CreateUserActivity extends AppCompatActivity {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         sessionEditor.putString("userSessionKey", user.getUsername());
-        sessionEditor.putString("userGameSessionKey", user.getUsername() + "Game");
         sessionEditor.apply();
     }
 

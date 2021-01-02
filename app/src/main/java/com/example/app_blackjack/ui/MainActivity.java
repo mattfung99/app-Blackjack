@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences gamePref = getSharedPreferences("PREF_GAMES", MODE_PRIVATE);
         Gson gson = new Gson();
         if (userLoggedIn) {
-            String json = gamePref.getString(sessionPref.getString("userGameSessionKey", null), "error");
+            String json = gamePref.getString(dHandler.getUser().getUsername() + "Game", "error");
             Game currGame = gson.fromJson(json, Game.class);
             dHandler.setGame(currGame);
         } else {
