@@ -39,6 +39,7 @@ public class GameTesterActivity extends AppCompatActivity {
                 displayDefaultWidgets();
                 createGame();
                 dHandler.setUserGameStarted(true);
+                dHandler.getUser().setThisUserGameStarted(true);
                 saveUserIntoSharedPreferences();
             }
         } else {
