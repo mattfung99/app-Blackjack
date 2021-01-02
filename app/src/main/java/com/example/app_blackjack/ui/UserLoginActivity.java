@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
+import com.example.app_blackjack.model.Game;
 import com.example.app_blackjack.model.User;
 import com.google.gson.Gson;
 import org.json.JSONException;
@@ -70,9 +71,12 @@ public class UserLoginActivity extends AppCompatActivity {
                 else {
                     Gson gson = new Gson();
                     dHandler.setUser(gson.fromJson(keyFromPref, User.class));
+                    retrieveGameFromSharedPreferences(eTextUsername.getText().toString() + "Game");
                     dHandler.setUserLoggedIn(true);
-                    dHandler.setDataLoadedFromSharedPref(true);
+                    dHandler.setUserLoadedFromSharedPref(true);
+                    updateSessionOptions();
                     saveUserSessionIntoSharedPref();
+                    dHandler.setUserGameStarted(dHandler.getUser().isThisUserGameStarted());
                     Toast.makeText(this, getString(R.string.toast_login_successful), Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -80,11 +84,25 @@ public class UserLoginActivity extends AppCompatActivity {
         }
     }
 
+    private void updateSessionOptions() {
+        dHandler.setDefaultNumDecks(dHandler.getUser().getNumDecks());
+        dHandler.setDefaultChosenCardDesign(dHandler.getUser().getChosenCardDesign());
+    }
+
+    private void retrieveGameFromSharedPreferences(String gameKey) {
+        SharedPreferences gamePref = getSharedPreferences("PREF_GAMES", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = gamePref.getString(gameKey, "error");
+        Game currGame = gson.fromJson(json, Game.class);
+        dHandler.setGame(currGame);
+    }
+
     private void saveUserSessionIntoSharedPref() {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         sessionEditor.putString("userSessionKey", dHandler.getUser().getUsername());
         sessionEditor.putBoolean("userLoggedIn", dHandler.isUserLoggedIn());
+        sessionEditor.putBoolean("userGameStarted", dHandler.getUser().isThisUserGameStarted());
         sessionEditor.apply();
     }
 
