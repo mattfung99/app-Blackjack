@@ -17,11 +17,27 @@ public class DataHandler {
     private boolean userSessionLoadedFromSharedPref;
     private boolean userLoadedFromSharedPref;
     private boolean nonUserLoadedFromSharedPref;
+    private boolean dataCleared;
 
     public static DataHandler getInstance() {
         if (instance == null)
             instance = new DataHandler();
         return instance;
+    }
+
+    public void clearData() {
+        if (userLoggedIn) {
+            user.resetUser();
+            mostMoneyWon = 0.0;
+            mostMoneyLost = 0.0;
+            userMostMoneyWon = "error";
+            userMostMoneyLost = "error";
+            userGameStarted = false;
+        } else {
+            defaultNumDecks = 1;
+            defaultChosenCardDesign = "blue";
+            randomGameStarted = false;
+        }
     }
 
     public User getUser() {
@@ -134,5 +150,13 @@ public class DataHandler {
 
     public void setNonUserLoadedFromSharedPref(boolean nonUserLoadedFromSharedPref) {
         this.nonUserLoadedFromSharedPref = nonUserLoadedFromSharedPref;
+    }
+
+    public boolean isDataCleared() {
+        return dataCleared;
+    }
+
+    public void setDataCleared(boolean dataCleared) {
+        this.dataCleared = dataCleared;
     }
 }

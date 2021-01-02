@@ -71,7 +71,7 @@ public class UserLoginActivity extends AppCompatActivity {
                 else {
                     Gson gson = new Gson();
                     dHandler.setUser(gson.fromJson(keyFromPref, User.class));
-                    retrieveGameFromSharedPreferences(eTextUsername.getText().toString() + "Game");
+                    retrieveGameFromSharedPref(eTextUsername.getText().toString() + "Game");
                     dHandler.setUserLoggedIn(true);
                     dHandler.setUserLoadedFromSharedPref(true);
                     updateSessionOptions();
@@ -89,7 +89,7 @@ public class UserLoginActivity extends AppCompatActivity {
         dHandler.setDefaultChosenCardDesign(dHandler.getUser().getChosenCardDesign());
     }
 
-    private void retrieveGameFromSharedPreferences(String gameKey) {
+    private void retrieveGameFromSharedPref(String gameKey) {
         SharedPreferences gamePref = getSharedPreferences("PREF_GAMES", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = gamePref.getString(gameKey, "error");

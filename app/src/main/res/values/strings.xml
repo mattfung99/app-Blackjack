@@ -97,8 +97,12 @@
     <!--  OptionsActivity  -->
     <string name="options_activity_name">Options</string>
     <string name="text_label_current_options">Current settings configured for: %s</string>
+    <string name="text_label_current_options_default">Current settings configured for: (No User Logged In)</string>
     <string name="text_label_num_decks">Select Number of Decks</string>
     <string name="text_label_card_design">Select Card Design Color</string>
+    <string name="toast_changes_saved_options">Changes saved for next game</string>
+    <string name="toast_user_reset">User Data Cleared</string>
+    <string name="toast_default_reset">Data Cleared</string>
     <string name="btn_clear_data">Clear Data</string>
 
     <!--  DeckTesterActivity  -->

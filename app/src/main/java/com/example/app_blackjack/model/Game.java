@@ -4,14 +4,18 @@ public class Game {
     private Deck deck;
     private int userScore;
     private int dealerScore;
+    private final int gameNumDecks;
+    private final String gameChosenCardDesign;
     private double userBetAmount;
     private int numCardsRemaining;
     private int numCardsUsed;
 
-    public Game() {
+    public Game(int numDecksIn, String cardDesignIn) {
         this.deck = new Deck();
         this.userScore = 0;
         this.dealerScore = 0;
+        this.gameNumDecks = numDecksIn;
+        this.gameChosenCardDesign = cardDesignIn;
         this.userBetAmount = 0.0;
         this.numCardsRemaining = 52;
         this.numCardsUsed = 0;
@@ -48,6 +52,14 @@ public class Game {
 
     public void setDealerScore(int dealerScore) {
         this.dealerScore = dealerScore;
+    }
+
+    public int getGameNumDecks() {
+        return gameNumDecks;
+    }
+
+    public String getGameChosenCardDesign() {
+        return gameChosenCardDesign;
     }
 
     public double getUserBetAmount() {

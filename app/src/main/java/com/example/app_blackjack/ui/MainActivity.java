@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
         if (dHandler.isUserLoggedIn()) {
             if (!dHandler.isUserLoadedFromSharedPref()) {
                 retrieveUserFromSharedPref();
-                retrieveGameFromSharedPref(dHandler.isUserLoggedIn());
+                if (dHandler.isUserGameStarted()) {
+                    retrieveGameFromSharedPref(dHandler.isUserLoggedIn());
+                }
             }
             getMenuInflater().inflate(R.menu.logged_in_main, menu);
             displayProfilePicture(menu);
@@ -177,7 +179,9 @@ public class MainActivity extends AppCompatActivity {
                 dHandler.setUser(new User("error", "error404", ""));
                 dHandler.setUserLoggedIn(false);
                 retrieveSessionOptions();
-                retrieveGameFromSharedPref(dHandler.isUserLoggedIn());
+                if (dHandler.isRandomGameStarted()) {
+                    retrieveGameFromSharedPref(dHandler.isUserLoggedIn());
+                }
                 saveLoggedOutSessionIntoSharedPref(false);
                 Toast.makeText(this, getString(R.string.toast_logout_successful), Toast.LENGTH_SHORT).show();
                 finish();
