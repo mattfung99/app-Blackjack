@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.example.app_blackjack.model.User;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
