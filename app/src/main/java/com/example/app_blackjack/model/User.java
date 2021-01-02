@@ -20,16 +20,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.filepath = filepath;
-        this.numDecks = 1;
-        this.chosenCardDesign = "blue";
-        this.isThisUserGameStarted = false;
-        this.balance = 5000.00;
-        this.userMostMoneyWon = 0;
-        this.userMostMoneyLost = 0;
-        this.gamesWon = 0;
-        this.gamesLost = 0;
-        this.gamesForfeited = 0;
-        this.numTimesBankrupted = 0;
+        resetUser();
     }
 
     public String getUsername() {
@@ -134,5 +125,18 @@ public class User {
 
     public void setNumTimesBankrupted(int numTimesBankrupted) {
         this.numTimesBankrupted = numTimesBankrupted;
+    }
+
+    public void resetUser() {
+        this.numDecks = 1;
+        this.chosenCardDesign = "blue";
+        this.isThisUserGameStarted = false;
+        this.balance = 5000.00;
+        this.userMostMoneyWon = 0.0;
+        this.userMostMoneyLost = 0.0;
+        this.gamesWon = 0;
+        this.gamesLost = 0;
+        this.gamesForfeited = 0;
+        this.numTimesBankrupted = 0;
     }
 }

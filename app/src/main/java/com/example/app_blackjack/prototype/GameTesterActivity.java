@@ -34,22 +34,22 @@ public class GameTesterActivity extends AppCompatActivity {
         {
             if (dHandler.isUserGameStarted()) {
                 game = dHandler.getGame();
-                displayWidgets();
+                displayWidgets(true);
             } else {
-                displayDefaultWidgets();
-                createGame();
+                displayDefaultWidgets(true);
+                createGame(true);
                 dHandler.setUserGameStarted(true);
                 dHandler.getUser().setThisUserGameStarted(true);
-                saveUserIntoSharedPreferences();
+                saveUserIntoSharedPref();
             }
         } else {
             if (dHandler.isRandomGameStarted()) {
                 game = dHandler.getGame();
                 game.getDeck().createDeckStringOutput();
-                displayWidgets();
+                displayWidgets(false);
             } else {
-                displayDefaultWidgets();
-                createGame();
+                displayDefaultWidgets(false);
+                createGame(false);
                 dHandler.setRandomGameStarted(true);
             }
         }
@@ -58,8 +58,11 @@ public class GameTesterActivity extends AppCompatActivity {
         setupDrawBtn();
     }
 
-    private void createGame() {
-        dHandler.setGame(new Game());
+    private void createGame(boolean isUserLoggedIn) {
+        dHandler.setGame(isUserLoggedIn ?
+                new Game(dHandler.getUser().getNumDecks(), dHandler.getUser().getChosenCardDesign()) :
+                new Game(dHandler.getDefaultNumDecks(), dHandler.getDefaultChosenCardDesign())
+        );
         game = dHandler.getGame();
         game.getDeck().createDeck();
         if (dHandler.getDefaultNumDecks() > 1) {
@@ -73,9 +76,9 @@ public class GameTesterActivity extends AppCompatActivity {
         displayCard = (ImageView)findViewById(R.id.imageGameDisplayCard);
     }
 
-    private void displayWidgets() {
+    private void displayWidgets(boolean gameFlag) {
         if (game.getDeck().getNumCardsUsed() == 0) {
-            displayDefaultWidgets();
+            displayDefaultWidgets(gameFlag);
         } else {
             displayCardName.setText(getString(R.string.test_display_card_name, game.getDeck().getUsedDeck().get(game.getDeck().getNumCardsUsed() - 1).getCardID()));
             int resID = getResources().getIdentifier(game.getDeck().getUsedDeck().get(game.getDeck().getNumCardsUsed() - 1).getCardID() , "drawable", getPackageName());
@@ -83,9 +86,14 @@ public class GameTesterActivity extends AppCompatActivity {
         }
     }
 
-    private void displayDefaultWidgets() {
+    private void displayDefaultWidgets(boolean gameFlag) {
         displayCardName.setText(getString(R.string.test_display_card_name_default));
-        int resID = getResources().getIdentifier(dHandler.getDefaultChosenCardDesign(), "drawable", getPackageName());
+        int resID;
+        if (gameFlag) {
+            resID = getResources().getIdentifier(dHandler.getUser().getChosenCardDesign(), "drawable", getPackageName());
+        } else {
+            resID = getResources().getIdentifier(dHandler.getDefaultChosenCardDesign(), "drawable", getPackageName());
+        }
         displayCard.setImageResource(resID);
     }
 
@@ -97,11 +105,11 @@ public class GameTesterActivity extends AppCompatActivity {
             int resID = getResources().getIdentifier(cardDrawn.getCardID() , "drawable", getPackageName());
             displayCard.setImageResource(resID);
 //            game.getDeck().createDeckStringOutput();
-            saveGameInSharedPreferences();
+            saveGameInSharedPref();
         });
     }
 
-    private void saveUserIntoSharedPreferences() {
+    private void saveUserIntoSharedPref() {
         SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPref.edit();
         Gson gson = new Gson();
@@ -110,7 +118,7 @@ public class GameTesterActivity extends AppCompatActivity {
         userEditor.apply();
     }
 
-    private void saveGameInSharedPreferences() {
+    private void saveGameInSharedPref() {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         SharedPreferences gamePref = getSharedPreferences("PREF_GAMES", MODE_PRIVATE);
