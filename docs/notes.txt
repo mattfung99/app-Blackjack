@@ -7,5 +7,5 @@ Editor putDouble(final Editor edit, final String key, final double value) {
 
 Retrieving
 double getDouble(final SharedPreferences prefs, final String key, final double defaultValue) {
-return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
+    return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
 }
