@@ -8,18 +8,321 @@
     android:background="@drawable/menu_background">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_marginBottom="16dp"
+        android:id="@+id/layoutDealerCards"
+        android:layout_width="650dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="95dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="212dp"
+        android:background="@drawable/custom_border"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"></LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/containerDealerCards"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivCard7"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                app:srcCompat="@drawable/blue" />
+
+            <ImageView
+                android:id="@+id/ivCard8"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                android:layout_marginStart="-50dp"
+                app:srcCompat="@drawable/blue" />
+
+            <ImageView
+                android:id="@+id/ivCard9"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                android:layout_marginStart="-50dp"
+                app:srcCompat="@drawable/blue" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/game_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="261dp"
+        android:layout_marginTop="217dp"
+        android:layout_marginEnd="262dp"
+        android:layout_marginBottom="133dp"
+        android:background="@drawable/custom_border"
+        android:fontFamily="@font/monofett"
+        android:text="@string/menu_title"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="@color/default_text_color"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivCard29"
+        android:layout_width="91dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="608dp"
+        android:layout_marginBottom="142dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_flipped" />
+
+    <ImageView
+        android:id="@+id/ivCard28"
+        android:layout_width="91dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="599dp"
+        android:layout_marginBottom="142dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_flipped" />
+
+    <ImageView
+        android:id="@+id/ivCard27"
+        android:layout_width="91dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="591dp"
+        android:layout_marginBottom="142dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_flipped" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_marginBottom="284dp"
+        android:id="@+id/layoutUserCards"
+        android:layout_width="650dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="287dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/custom_border"
+        android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"></LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/containerUserCards"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivCard"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                app:srcCompat="@drawable/c10" />
+
+            <ImageView
+                android:id="@+id/ivCard2"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                android:layout_marginStart="-50dp"
+                app:srcCompat="@drawable/d3" />
+
+            <ImageView
+                android:id="@+id/ivCard3"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                android:layout_marginStart="-50dp"
+                app:srcCompat="@drawable/s5" />
+
+            <ImageView
+                android:id="@+id/ivCard4"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                android:layout_marginStart="-50dp"
+                app:srcCompat="@drawable/h4" />
+
+            <ImageView
+                android:id="@+id/ivCard5"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                android:layout_marginStart="-50dp"
+                app:srcCompat="@drawable/sj" />
+
+            <ImageView
+                android:id="@+id/ivCard6"
+                android:layout_width="60dp"
+                android:layout_height="91dp"
+                android:layout_marginStart="-50dp"
+                app:srcCompat="@drawable/ck" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/scoreBoard"
+        android:layout_width="110dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="215dp"
+        android:layout_marginEnd="479dp"
+        android:layout_marginBottom="134dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textDealerScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="49dp"
+            android:shadowColor="@color/default_text_color"
+            android:text="@string/text_dealer_score"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textUserBet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="43dp"
+            android:layout_marginBottom="11dp"
+            android:shadowColor="@color/default_text_color"
+            android:text="@string/text_user_bet"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textUserScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="30dp"
+            android:shadowColor="@color/default_text_color"
+            android:text="@string/text_user_score"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btnHit"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="500dp"
+        android:layout_marginTop="260dp"
+        android:layout_marginEnd="161dp"
+        android:layout_marginBottom="132dp"
+        android:text="@string/btn_hit"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnStand"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="601dp"
+        android:layout_marginTop="260dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="132dp"
+        android:text="@string/btn_stand"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layoutChips"
+        android:layout_width="208dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="491dp"
+        android:layout_marginTop="218dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="167dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/imageBtnBlue"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/token_blue" />
+
+        <ImageButton
+            android:id="@+id/imageBtnGreen"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/token_green" />
+
+        <ImageButton
+            android:id="@+id/imageBtnRed"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/token_red" />
+
+        <ImageButton
+            android:id="@+id/imageBtnBlack"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/token_black" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

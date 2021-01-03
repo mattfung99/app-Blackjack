@@ -20,3 +20,8 @@ public class GameActivity extends AppCompatActivity {
         return new Intent(context, GameActivity.class);
     }
 }
+
+/**
+ * To change the activity name
+ *  this.setTitle("")
+ */
