@@ -105,6 +105,9 @@
     <string name="toast_default_reset">Data Cleared</string>
     <string name="btn_clear_data">Clear Data</string>
 
+    <!--  GameActivity  -->
+
+
     <!--  DeckTesterActivity  -->
     <string name="deck_tester_activity_name">Deck Tester</string>
     <string name="test_display_card_name">Card: %s</string>

@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupStartButton() {
         Button btnStart = (Button)findViewById(R.id.btnMenuStart);
         btnStart.setOnClickListener(v -> {
-            Intent intent = DeckTesterActivity.makeIntent(MainActivity.this);
+            Intent intent = GameActivity.makeIntent(MainActivity.this);
             startActivity(intent);
         });
     }
@@ -143,8 +143,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupHelpButton() {
-//        Intent helpIntent = HelpActivity.makeIntent(MainActivity.this);
-//        startActivity(helpIntent);
+        Button btnHelp = (Button)findViewById(R.id.btnMenuHelp);
+        btnHelp.setOnClickListener(v -> {
+            Intent intent = DeckTesterActivity.makeIntent(MainActivity.this);
+            startActivity(intent);
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
