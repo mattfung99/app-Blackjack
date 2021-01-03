@@ -106,7 +106,12 @@
     <string name="btn_clear_data">Clear Data</string>
 
     <!--  GameActivity  -->
-
+    <string name="game_activity_name">Blackjack</string>
+    <string name="btn_hit">Hit</string>
+    <string name="btn_stand">Stand</string>
+    <string name="text_dealer_score">Dealer Score: %d</string>
+    <string name="text_user_score">User Score: %d</string>
+    <string name="text_user_bet">Bet: $%.2f</string>
 
     <!--  DeckTesterActivity  -->
     <string name="deck_tester_activity_name">Deck Tester</string>
