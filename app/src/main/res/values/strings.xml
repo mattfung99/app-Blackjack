@@ -112,6 +112,9 @@
     <string name="text_dealer_score">Dealer Score: %d</string>
     <string name="text_user_score">User Score: %d</string>
     <string name="text_user_bet">Bet: $%.2f</string>
+    <string-array name="game_instructions">
+        <item name="select_bet">Select a bet! Click on one of the four betting chips</item>
+    </string-array>
 
     <!--  DeckTesterActivity  -->
     <string name="deck_tester_activity_name">Deck Tester</string>

@@ -1,5 +1,7 @@
 package com.example.app_blackjack.model;
 
+import java.util.ArrayList;
+
 public class Game {
     private Deck deck;
     private int userScore;
@@ -9,6 +11,8 @@ public class Game {
     private double userBetAmount;
     private int numCardsRemaining;
     private int numCardsUsed;
+    private ArrayList<Card> userDeck;
+    private ArrayList<Card> dealerDeck;
 
     public Game(int numDecksIn, String cardDesignIn) {
         this.deck = new Deck();
@@ -84,5 +88,45 @@ public class Game {
 
     public void setNumCardsUsed(int numCardsUsed) {
         this.numCardsUsed = numCardsUsed;
+    }
+
+    public ArrayList<Card> getUserDeck() {
+        return userDeck;
+    }
+
+    public void setUserDeck(ArrayList<Card> userDeck) {
+        this.userDeck = userDeck;
+    }
+
+    public int getUserDeckSize() {
+        return userDeck.size();
+    }
+
+    public void addCardUserDeck(Card cardDrawn) {
+        userDeck.add(cardDrawn);
+    }
+
+    public void clearUserDeck() {
+        userDeck.clear();
+    }
+
+    public ArrayList<Card> getDealerDeck() {
+        return dealerDeck;
+    }
+
+    public void setDealerDeck(ArrayList<Card> dealerDeck) {
+        this.dealerDeck = dealerDeck;
+    }
+
+    public int getDealerDeckSize() {
+        return dealerDeck.size();
+    }
+
+    public void addCardDealerDeck(Card cardDrawn) {
+        dealerDeck.add(cardDrawn);
+    }
+
+    public void clearDealerDeck() {
+        dealerDeck.clear();
     }
 }
