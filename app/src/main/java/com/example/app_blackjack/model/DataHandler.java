@@ -7,6 +7,7 @@ public class DataHandler {
     private Game game;
     private int defaultNumDecks;
     private String defaultChosenCardDesign;
+    private double defaultBalance;
     private double mostMoneyWon;
     private double mostMoneyLost;
     private String userMostMoneyWon;
@@ -36,6 +37,7 @@ public class DataHandler {
         } else {
             defaultNumDecks = 1;
             defaultChosenCardDesign = "blue";
+            defaultBalance = 2000.0;
             randomGameStarted = false;
         }
     }
@@ -70,6 +72,14 @@ public class DataHandler {
 
     public void setDefaultChosenCardDesign(String defaultChosenCardDesign) {
         this.defaultChosenCardDesign = defaultChosenCardDesign;
+    }
+
+    public double getDefaultBalance() {
+        return defaultBalance;
+    }
+
+    public void setDefaultBalance(double defaultBalance) {
+        this.defaultBalance = defaultBalance;
     }
 
     public double getMostMoneyWon() {

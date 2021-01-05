@@ -45,7 +45,6 @@ public class GameTesterActivity extends AppCompatActivity {
         } else {
             if (dHandler.isRandomGameStarted()) {
                 game = dHandler.getGame();
-                game.getDeck().createDeckStringOutput();
                 displayWidgets(false);
             } else {
                 displayDefaultWidgets(false);
@@ -53,8 +52,6 @@ public class GameTesterActivity extends AppCompatActivity {
                 dHandler.setRandomGameStarted(true);
             }
         }
-
-//        System.out.println(game.getDeck());
         setupDrawBtn();
     }
 
@@ -104,7 +101,6 @@ public class GameTesterActivity extends AppCompatActivity {
             displayCardName.setText(getString(R.string.test_display_card_name, cardDrawn.getCardID()));
             int resID = getResources().getIdentifier(cardDrawn.getCardID() , "drawable", getPackageName());
             displayCard.setImageResource(resID);
-//            game.getDeck().createDeckStringOutput();
             saveGameInSharedPref();
         });
     }

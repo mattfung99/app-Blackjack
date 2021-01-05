@@ -1,5 +1,7 @@
 package com.example.app_blackjack.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Game {
@@ -11,8 +13,10 @@ public class Game {
     private double userBetAmount;
     private int numCardsRemaining;
     private int numCardsUsed;
+    private String currState;
     private ArrayList<Card> userDeck;
     private ArrayList<Card> dealerDeck;
+    private boolean isDialogCancelled;
 
     public Game(int numDecksIn, String cardDesignIn) {
         this.deck = new Deck();
@@ -23,6 +27,10 @@ public class Game {
         this.userBetAmount = 0.0;
         this.numCardsRemaining = 52;
         this.numCardsUsed = 0;
+        this.currState = "SELECT_BET";
+        this.userDeck = new ArrayList<>();
+        this.dealerDeck = new ArrayList<>();
+        this.isDialogCancelled = false;
     }
 
     public Deck getDeck() {
@@ -90,6 +98,14 @@ public class Game {
         this.numCardsUsed = numCardsUsed;
     }
 
+    public String getCurrState() {
+        return currState;
+    }
+
+    public void setCurrState(String currState) {
+        this.currState = currState;
+    }
+
     public ArrayList<Card> getUserDeck() {
         return userDeck;
     }
@@ -128,5 +144,27 @@ public class Game {
 
     public void clearDealerDeck() {
         dealerDeck.clear();
+    }
+
+    public boolean isDialogCancelled() {
+        return isDialogCancelled;
+    }
+
+    public void setDialogCancelled(boolean dialogCancelled) {
+        isDialogCancelled = dialogCancelled;
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return "User Deck\n" + createDeckStringOutput(true) + "\nDealer Deck\n" + createDeckStringOutput(false);
+    }
+
+    private StringBuilder createDeckStringOutput(boolean deckIndicator) {
+        StringBuilder output = new StringBuilder();
+        for (Card c : (deckIndicator ? userDeck : dealerDeck)) {
+            output.append(c.getCardID()).append(" ").append(c.getCardValue()).append("\n");
+        }
+        return output;
     }
 }
