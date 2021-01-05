@@ -84,7 +84,7 @@ public class Deck {
     @NotNull
     @Override
     public String toString() {
-        return "Playing Deck\n" + createDeckStringOutput(true) + "\nUsed Deck" + createDeckStringOutput(false);
+        return "Playing Deck\n" + createDeckStringOutput(true) + "\nUsed Deck\n" + createDeckStringOutput(false);
     }
 
     public void createDeckStringOutput() {

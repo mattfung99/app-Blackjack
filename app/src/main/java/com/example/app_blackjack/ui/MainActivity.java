@@ -231,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         dHandler.setDefaultNumDecks(sessionPref.getInt("defaultSettingsNumDecks", 1));
         dHandler.setDefaultChosenCardDesign(sessionPref.getString("defaultSettingsCardDesign", "blue"));
+        dHandler.setDefaultBalance(getDouble(sessionPref, "defaultBalance", 2000.0));
     }
 
     private void retrieveStatsFromSharedPref() {

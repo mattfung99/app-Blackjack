@@ -183,7 +183,8 @@ public class CreateUserActivity extends AppCompatActivity {
         } else if ((!getIntent().getBooleanExtra("edit", false)) &&
                 (keyFromPref != null ||
                         eTextUsername.getText().toString().matches("error") ||
-                        eTextUsername.getText().toString().matches("randomGame"))) {
+                        eTextUsername.getText().toString().matches("randomGame") ||
+                        eTextUsername.getText().toString().contains("Game"))) {
             textInvalidUsername.setText(getString(R.string.invalid_username_taken));
             textInvalidUsername.setTextColor(ContextCompat.getColor(this, R.color.invalid_red));
             return false;

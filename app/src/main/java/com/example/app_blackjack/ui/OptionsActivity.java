@@ -151,7 +151,6 @@ public class OptionsActivity extends AppCompatActivity {
             }
             dHandler.setDataCleared(true);
             finish();
-//            startActivity(getIntent());
         });
     }
 
@@ -218,7 +217,12 @@ public class OptionsActivity extends AppCompatActivity {
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         sessionEditor.putInt("defaultSettingsNumDecks", dHandler.getDefaultNumDecks());
         sessionEditor.putString("defaultSettingsCardDesign", dHandler.getDefaultChosenCardDesign());
+        sessionEditor = putDouble(sessionEditor, "defaultBalance", dHandler.getDefaultBalance());
         sessionEditor.apply();
+    }
+
+    private SharedPreferences.Editor putDouble(final SharedPreferences.Editor edit, final String key, final double value) {
+        return edit.putLong(key, Double.doubleToRawLongBits(value));
     }
 
     public static Intent makeIntent(Context context) {
