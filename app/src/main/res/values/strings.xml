@@ -124,6 +124,11 @@
     <string name="result_push">Push - Bet returned to user</string>
     <string name="toast_invalid_bet">You do not have enough money. Choose another bet</string>
 
+    <!--  MessageFragment  -->
+    <string name="message_fragment_title">Game Over</string>
+    <string name="btn_positive">Return to menu</string>
+    <string name="btn_negative">Restart game</string>
+
     <!--  DeckTesterActivity  -->
     <string name="deck_tester_activity_name">Deck Tester</string>
     <string name="test_display_card_name">Card: %s</string>

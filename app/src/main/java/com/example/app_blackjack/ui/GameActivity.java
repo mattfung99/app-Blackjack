@@ -37,6 +37,7 @@ public class GameActivity extends AppCompatActivity {
     private LinearLayout containerUserCards;
     private final ImageView[] DECK_CARDS = new ImageView[3];
     private final ImageButton[] BETTING_CHIPS = new ImageButton[4];
+    private ImageView hiddenCard;
 
     private enum State {
         SELECT_BET,
@@ -45,8 +46,7 @@ public class GameActivity extends AppCompatActivity {
         DEALER_GAMEPLAY,                // Note to self: Whether or not the dealer will draw a card will be pre-determined, this state will simply animate it
         RESULT_LOSS,
         RESULT_PUSH,
-        RESULT_WIN,
-        RESET
+        RESULT_WIN
     }
 
     @Override
@@ -77,18 +77,15 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case DEALER_GAMEPLAY:
                 this.setTitle(getResources().getStringArray(R.array.game_instructions)[2]);
+                textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerScore()));
+                int resID = getResources().getIdentifier(game.getDealerDeck().get(0).getCardID(), "drawable", getPackageName());
+                hiddenCard.setImageResource(resID);
                 setButtons(false);
                 break;
             case RESULT_LOSS:
                 setButtons(false);
                 this.setTitle(getString(R.string.result_loss, game.getUserBetAmount()));
-                FragmentManager manager = getSupportFragmentManager();
-                MessageFragment dialog = new MessageFragment(-1, game.getUserBetAmount());
-                dialog.show(manager, "Game Over");
-                if (game.isDialogCancelled()) {
-                    stateMachine(State.RESET);
-                    game.setCurrState(State.valueOf("RESET").toString());
-                }
+                createAlertDialog(-1);
                 break;
             case RESULT_PUSH:
                 this.setTitle(getString(R.string.result_push));
@@ -98,6 +95,7 @@ public class GameActivity extends AppCompatActivity {
                     dHandler.setDefaultBalance(dHandler.getDefaultBalance() + game.getUserBetAmount());
                 }
                 updateScoreboard();
+                createAlertDialog(0);
                 break;
             case RESULT_WIN:
                 this.setTitle(getString(R.string.result_win, game.getUserBetAmount() * 2));
@@ -107,14 +105,7 @@ public class GameActivity extends AppCompatActivity {
                     dHandler.setDefaultBalance(dHandler.getDefaultBalance() + 2 * game.getUserBetAmount());
                 }
                 updateScoreboard();
-                break;
-            case RESET:
-                if (dHandler.isUserLoggedIn()) {
-                    dHandler.setUserGameStarted(false);
-                } else {
-                    dHandler.setRandomGameStarted(false);
-                }
-                startActivity(getIntent());
+                createAlertDialog(1);
                 break;
         }
     }
@@ -222,18 +213,25 @@ public class GameActivity extends AppCompatActivity {
             ImageView ivCard = setCardProperties(cardDrawn);
             setCardMargin(ivCard);
             containerUserCards.addView(ivCard);
-            checkAceException(cardDrawn);
+            checkAceException(cardDrawn, true);
             validateUserScore();
             updateScoreboard();
         });
     }
 
-    private void checkAceException(Card cardDrawn) {
-        System.out.println(cardDrawn.getRank().toString());
-        if (cardDrawn.getRank().toString().equals("ACE") && (game.getUserScore() + cardDrawn.getCardValue() > 21)) {
-            game.setUserScore(game.getUserScore() + 1);
+    private void checkAceException(Card cardDrawn, boolean containerIndicator) {
+        if (containerIndicator) {
+            if (cardDrawn.getRank().toString().equals("ACE") && (game.getUserScore() + cardDrawn.getCardValue() > 21)) {
+                game.setUserScore(game.getUserScore() + 1);
+            } else {
+                game.setUserScore(game.getUserScore() + cardDrawn.getCardValue());
+            }
         } else {
-            game.setUserScore(game.getUserScore() + cardDrawn.getCardValue());
+            if (cardDrawn.getRank().toString().equals("ACE") && (game.getDealerScore() + cardDrawn.getCardValue() > 21)) {
+                game.setDealerScore(game.getDealerScore() + 1);
+            } else {
+                game.setDealerScore(game.getDealerScore() + cardDrawn.getCardValue());
+            }
         }
     }
 
@@ -247,7 +245,7 @@ public class GameActivity extends AppCompatActivity {
     private void setupStandButton() {
         btnStand.setOnClickListener(v -> {
             stateMachine(State.DEALER_GAMEPLAY);
-//            game.setCurrState(State.valueOf("DEALER_GAMEPLAY").toString());
+            game.setCurrState(State.valueOf("DEALER_GAMEPLAY").toString());
         });
     }
 
@@ -342,17 +340,18 @@ public class GameActivity extends AppCompatActivity {
             if (index > 0) {
                 setCardMargin(ivCard);
             }
-            game.setUserScore(game.getUserScore() + card.getCardValue());
+            checkAceException(card, true);
             containerUserCards.addView(ivCard);
         } else {
             if (index == 0) {
                 int resID = getResources().getIdentifier(game.getGameChosenCardDesign(), "drawable", getPackageName());
                 ivCard.setImageResource(resID);
+                hiddenCard = ivCard;
             }
             if (index > 0) {
                 setCardMargin(ivCard);
             }
-            game.setDealerScore(game.getDealerScore() + card.getCardValue());
+            checkAceException(card, false);
             containerDealerCards.addView(ivCard);
         }
     }
@@ -362,6 +361,21 @@ public class GameActivity extends AppCompatActivity {
         marginParams.setMargins((int)getResources().getDimension(R.dimen.card_margin), 0, 0, 0);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
         ivCard.setLayoutParams(layoutParams);
+    }
+
+    private void createAlertDialog(int messageType) {
+        FragmentManager manager = getSupportFragmentManager();
+        MessageFragment dialog;
+        switch (messageType) {
+            case -1: case 1:
+                dialog = new MessageFragment(messageType, game.getUserBetAmount(), getIntent());
+                dialog.show(manager, getString(R.string.message_fragment_title));
+                break;
+            case 0:
+                dialog = new MessageFragment(messageType, getIntent());
+                dialog.show(manager, getString(R.string.message_fragment_title));
+                break;
+        }
     }
 
     private double fetchChipValue(int index) {

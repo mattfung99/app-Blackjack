@@ -16,7 +16,6 @@ public class Game {
     private String currState;
     private ArrayList<Card> userDeck;
     private ArrayList<Card> dealerDeck;
-    private boolean isDialogCancelled;
 
     public Game(int numDecksIn, String cardDesignIn) {
         this.deck = new Deck();
@@ -30,7 +29,6 @@ public class Game {
         this.currState = "SELECT_BET";
         this.userDeck = new ArrayList<>();
         this.dealerDeck = new ArrayList<>();
-        this.isDialogCancelled = false;
     }
 
     public Deck getDeck() {
@@ -144,14 +142,6 @@ public class Game {
 
     public void clearDealerDeck() {
         dealerDeck.clear();
-    }
-
-    public boolean isDialogCancelled() {
-        return isDialogCancelled;
-    }
-
-    public void setDialogCancelled(boolean dialogCancelled) {
-        isDialogCancelled = dialogCancelled;
     }
 
     @NotNull
