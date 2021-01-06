@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,11 +41,14 @@ public class GameActivity extends AppCompatActivity {
     private final ImageButton[] BETTING_CHIPS = new ImageButton[4];
     private ImageView hiddenCard;
 
+    private int dealerScoreBeforeStand;
+    private Handler handler = new Handler();
+
     private enum State {
         SELECT_BET,
         DEAL_CARDS,
         USER_GAMEPLAY,
-        DEALER_GAMEPLAY,                // Note to self: Whether or not the dealer will draw a card will be pre-determined, this state will simply animate it
+        DEALER_GAMEPLAY,
         RESULT_LOSS,
         RESULT_PUSH,
         RESULT_WIN
@@ -56,6 +61,14 @@ public class GameActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         setupReferences();
         setupGame();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void stateMachine(State currState) {
@@ -76,38 +89,39 @@ public class GameActivity extends AppCompatActivity {
                 setButtons(true);
                 break;
             case DEALER_GAMEPLAY:
-                this.setTitle(getResources().getStringArray(R.array.game_instructions)[2]);
-                textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerScore()));
-                int resID = getResources().getIdentifier(game.getDealerDeck().get(0).getCardID(), "drawable", getPackageName());
-                hiddenCard.setImageResource(resID);
                 setButtons(false);
+                revealHiddenCard();
+                this.setTitle(getResources().getStringArray(R.array.game_instructions)[2]);
+                textDealerScore.setText(getString(R.string.text_dealer_score, dealerScoreBeforeStand));
+                displayDealerCards();
                 break;
             case RESULT_LOSS:
-                setButtons(false);
                 this.setTitle(getString(R.string.result_loss, game.getUserBetAmount()));
+                setButtons(false);
                 createAlertDialog(-1);
                 break;
             case RESULT_PUSH:
                 this.setTitle(getString(R.string.result_push));
-                if (dHandler.isUserLoggedIn()) {
-                    dHandler.getUser().setBalance(dHandler.getUser().getBalance() + game.getUserBetAmount());
-                } else {
-                    dHandler.setDefaultBalance(dHandler.getDefaultBalance() + game.getUserBetAmount());
-                }
                 updateScoreboard();
                 createAlertDialog(0);
                 break;
             case RESULT_WIN:
-                this.setTitle(getString(R.string.result_win, game.getUserBetAmount() * 2));
-                if (dHandler.isUserLoggedIn()) {
-                    dHandler.getUser().setBalance(dHandler.getUser().getBalance() + 2 * game.getUserBetAmount());
+                double wonAmount;
+                if (game.getUserScore() == 21) {
+                    wonAmount = 2.5 * game.getUserBetAmount();
                 } else {
-                    dHandler.setDefaultBalance(dHandler.getDefaultBalance() + 2 * game.getUserBetAmount());
+                    wonAmount = 2 * game.getUserBetAmount();
                 }
+                this.setTitle(getString(R.string.result_win, wonAmount));
                 updateScoreboard();
                 createAlertDialog(1);
                 break;
         }
+    }
+
+    private void setState(String currState) {
+        game.setCurrState(currState);
+        stateMachine(State.valueOf(game.getCurrState()));
     }
 
     private void setupReferences() {
@@ -201,8 +215,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void betValidated() {
         updateScoreboard();
-        stateMachine(State.DEAL_CARDS);
-        game.setCurrState(State.valueOf("DEAL_CARDS").toString());
+        setState(State.valueOf("DEAL_CARDS").toString());
     }
 
     private void setupHitButton() {
@@ -235,18 +248,94 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void checkAceException(Card cardDrawn) {
+        if (cardDrawn.getRank().toString().equals("ACE") && (dealerScoreBeforeStand + cardDrawn.getCardValue() > 21)) {
+            dealerScoreBeforeStand += 1;
+        } else {
+            dealerScoreBeforeStand += cardDrawn.getCardValue();
+        }
+    }
+
     private void validateUserScore() {
         if (game.getUserScore() > 21) {
-            stateMachine(State.RESULT_LOSS);
-            game.setCurrState(State.valueOf("RESULT_LOSS").toString());
+            setButtons(false);
+            runOnUiThread(() -> new Handler().postDelayed(() ->
+                setState(State.valueOf("RESULT_LOSS").toString()), 3000)
+            );
         }
     }
 
     private void setupStandButton() {
         btnStand.setOnClickListener(v -> {
-            stateMachine(State.DEALER_GAMEPLAY);
-            game.setCurrState(State.valueOf("DEALER_GAMEPLAY").toString());
+            if (game.getDealerScore() > game.getUserScore()) {
+                setButtons(false);
+                revealHiddenCard();
+                textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerScore()));
+                runOnUiThread(() -> new Handler().postDelayed(() ->
+                        setState(State.valueOf("RESULT_LOSS").toString()), 3000)
+                );
+            } else {
+                setDealerCards();
+                setState(State.valueOf("DEALER_GAMEPLAY").toString());
+            }
         });
+    }
+
+    private void validateDealerScore() {
+        if (game.getDealerScore() > 21) {
+            setState(State.valueOf("RESULT_WIN").toString());
+        } else {
+            if (game.getDealerScore() == game.getUserScore()) {
+                setState(State.valueOf("RESULT_PUSH").toString());
+            } else if (game.getDealerScore() < game.getUserScore()) {
+                setState(State.valueOf("RESULT_WIN").toString());
+            } else {
+                setState(State.valueOf("RESULT_LOSS").toString());
+            }
+        }
+    }
+
+    private void setDealerCards() {
+        boolean finishDraw = false;
+        do {
+            if (game.getDealerScore() > game.getUserScore()) {
+                finishDraw = true;
+            } else {
+                if (game.getDealerScore() <= 11) {
+                    drawDealerCard();
+                } else if (game.getDealerScore() >= 12 && game.getDealerScore() <= 14) {
+                    if (getRand() >= 21) {
+                        drawDealerCard();
+                    } else {
+                        finishDraw = true;
+                    }
+                } else if (game.getDealerScore() >= 15 && game.getDealerScore() <= 17) {
+                    if (getRand() >= 51) {
+                        drawDealerCard();
+                    } else {
+                        finishDraw = true;
+                    }
+                } else if (game.getDealerScore() >= 18 && game.getDealerScore() <= 19) {
+                    if (getRand() >= 81) {
+                        drawDealerCard();
+                    } else {
+                        finishDraw = true;
+                    }
+                } else {
+                    finishDraw = true;
+                }
+            }
+        } while (!finishDraw);
+    }
+
+    private void drawDealerCard() {
+        Card cardDrawn = game.getDeck().drawCard();
+        game.addCardDealerDeck(cardDrawn);
+        checkAceException(cardDrawn, false);
+    }
+
+    private int getRand() {
+        return (int)(Math.random() * (100 - 1)) + 1;
     }
 
     private void updateScoreboard() {
@@ -278,7 +367,6 @@ public class GameActivity extends AppCompatActivity {
         game.addCardUserDeck(game.getDeck().drawCard());
         game.addCardDealerDeck(game.getDeck().drawCard());
         game.addCardDealerDeck(game.getDeck().drawCard());
-        System.out.println(game);
     }
 
     private void setBettingChips(boolean isEnabled) {
@@ -298,8 +386,7 @@ public class GameActivity extends AppCompatActivity {
         expandContainer(game.getDealerDeckSize() * (int)getResources().getDimension(R.dimen.container_space), false);
         drawCards(false);
         updateScoreboard();
-        stateMachine(State.USER_GAMEPLAY);
-        game.setCurrState(State.valueOf("USER_GAMEPLAY").toString());
+        setState(State.valueOf("USER_GAMEPLAY").toString());
     }
 
     private void expandContainer(int addedWidth, boolean containerIndicator) {
@@ -320,6 +407,7 @@ public class GameActivity extends AppCompatActivity {
             setCardProperties(ivCard, card, index, containerIndicator);
             index++;
         }
+        dealerScoreBeforeStand = game.getDealerScore();
 //        saveGameInSharedPref();
     }
 
@@ -347,6 +435,7 @@ public class GameActivity extends AppCompatActivity {
                 int resID = getResources().getIdentifier(game.getGameChosenCardDesign(), "drawable", getPackageName());
                 ivCard.setImageResource(resID);
                 hiddenCard = ivCard;
+                hiddenCard.setId(R.id.hiddenCard);
             }
             if (index > 0) {
                 setCardMargin(ivCard);
@@ -367,15 +456,82 @@ public class GameActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         MessageFragment dialog;
         switch (messageType) {
-            case -1: case 1:
+            case -1:
                 dialog = new MessageFragment(messageType, game.getUserBetAmount(), getIntent());
+                dialog.setCancelable(false);
                 dialog.show(manager, getString(R.string.message_fragment_title));
                 break;
             case 0:
                 dialog = new MessageFragment(messageType, getIntent());
+                dialog.setCancelable(false);
+                dialog.show(manager, getString(R.string.message_fragment_title));
+                break;
+            case 1:
+                double wonAmount;
+                if (game.getUserScore() == 21) {
+                    wonAmount = 2.5 * game.getUserBetAmount();
+                } else {
+                    wonAmount = 2 * game.getUserBetAmount();
+                }
+                dialog = new MessageFragment(messageType, wonAmount, getIntent());
+                dialog.setCancelable(false);
                 dialog.show(manager, getString(R.string.message_fragment_title));
                 break;
         }
+    }
+
+    private void revealHiddenCard() {
+        int resID = getResources().getIdentifier(game.getDealerDeck().get(0).getCardID(), "drawable", getPackageName());
+        hiddenCard.setImageResource(resID);
+    }
+
+    private void displayDealerCards() {
+        if (game.getDealerDeckSize() == 2) {
+            doneDisplayDealerCard();
+        } else {
+            handler.postDelayed(runnable, 2000);
+        }
+    }
+
+    private void doneDisplayDealerCard() {
+        setTitle(3);
+        runOnUiThread(() -> new Handler().postDelayed(() -> {
+            System.out.println("case 2");
+            validateDealerScore();
+        }, 3000));
+    }
+
+    private final Runnable runnable = new Runnable() {
+        int index = 2;
+        boolean flagEnd;
+        @Override
+        public void run() {
+            flagEnd = displayDealerCard(index);
+            index++;
+            if (!flagEnd) {
+                handler.postDelayed(this, 3000);
+            }
+        }
+    };
+
+    private boolean displayDealerCard(int index) {
+        if (index == game.getDealerDeckSize()) {
+            handler.removeCallbacks(runnable);
+            doneDisplayDealerCard();
+            return true;
+        }
+        Card cardDrawn = game.getDealerDeck().get(index);
+        expandContainer((int)getResources().getDimension(R.dimen.container_space), false);
+        ImageView ivCard = setCardProperties(cardDrawn);
+        setCardMargin(ivCard);
+        containerDealerCards.addView(ivCard);
+        checkAceException(cardDrawn);
+        textDealerScore.setText(getString(R.string.text_dealer_score, dealerScoreBeforeStand));
+        return false;
+    }
+
+    public void setTitle(int index) {
+        this.setTitle(getResources().getStringArray(R.array.game_instructions)[index]);
     }
 
     private double fetchChipValue(int index) {

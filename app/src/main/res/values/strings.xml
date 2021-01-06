@@ -117,7 +117,8 @@
     <string-array name="game_instructions">
         <item name="select_bet">Select a bet: Click on one of the four betting chips</item>
         <item name="user_gameplay">User\'s Turn: Click on hit to draw a card or on stand to end turn</item>
-        <item name="dealer_gameplay">Dealer\'s Turn: </item>
+        <item name="dealer_gameplay">Dealer\'s Turn: Making a decision…</item>
+        <item name="dealer_done">Dealer\'s Turn: Done making a decision</item>
     </string-array>
     <string name="result_win">User wins - you win $%.0f</string>
     <string name="result_loss">Dealer wins - you lose $%.0f</string>
@@ -126,8 +127,8 @@
 
     <!--  MessageFragment  -->
     <string name="message_fragment_title">Game Over</string>
-    <string name="btn_positive">Return to menu</string>
-    <string name="btn_negative">Restart game</string>
+    <string name="btn_positive">Leave</string>
+    <string name="btn_negative">New game</string>
 
     <!--  DeckTesterActivity  -->
     <string name="deck_tester_activity_name">Deck Tester</string>

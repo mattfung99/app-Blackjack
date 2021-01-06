@@ -15,8 +15,6 @@ import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.example.app_blackjack.model.Game;
 import com.example.app_blackjack.model.User;
-import com.example.app_blackjack.prototype.DeckTesterActivity;
-import com.example.app_blackjack.prototype.GameTesterActivity;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -57,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateOptionsMenu(Menu menu) {
-        System.out.println("userLoggedIn: " + dHandler.isUserLoggedIn());
-        System.out.println("isUserGameStarted: " + dHandler.isUserGameStarted());
-        System.out.println("isRandomUserGameStarted: " + dHandler.isRandomGameStarted());
-        System.out.println("isUserLoadedFromSharedPref: " + dHandler.isUserLoadedFromSharedPref());
-        System.out.println("isNonUserLoadedFromSharedPref: " + dHandler.isNonUserLoadedFromSharedPref());
+//        System.out.println("userLoggedIn: " + dHandler.isUserLoggedIn());
+//        System.out.println("isUserGameStarted: " + dHandler.isUserGameStarted());
+//        System.out.println("isRandomUserGameStarted: " + dHandler.isRandomGameStarted());
+//        System.out.println("isUserLoadedFromSharedPref: " + dHandler.isUserLoadedFromSharedPref());
+//        System.out.println("isNonUserLoadedFromSharedPref: " + dHandler.isNonUserLoadedFromSharedPref());
 
         if (dHandler.isUserLoggedIn()) {
             if (!dHandler.isUserLoadedFromSharedPref()) {
@@ -129,8 +127,6 @@ public class MainActivity extends AppCompatActivity {
     private void setupRestartButton() {
         Button btnRestart = (Button)findViewById(R.id.btnMenuRestart);
         btnRestart.setOnClickListener(v -> {
-            Intent intent = GameTesterActivity.makeIntent(MainActivity.this);
-            startActivity(intent);
         });
     }
 
@@ -145,8 +141,6 @@ public class MainActivity extends AppCompatActivity {
     private void setupHelpButton() {
         Button btnHelp = (Button)findViewById(R.id.btnMenuHelp);
         btnHelp.setOnClickListener(v -> {
-            Intent intent = DeckTesterActivity.makeIntent(MainActivity.this);
-            startActivity(intent);
         });
     }
 

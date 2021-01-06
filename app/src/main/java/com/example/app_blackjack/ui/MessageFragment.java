@@ -35,8 +35,7 @@ public class MessageFragment extends AppCompatDialogFragment
 
     @NotNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState)
-    {
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         // Create the view to show
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_message_fragment, null);
 
@@ -56,10 +55,55 @@ public class MessageFragment extends AppCompatDialogFragment
     private void resetGame() {
         if (dHandler.isUserLoggedIn()) {
             dHandler.setUserGameStarted(false);
+            setStatistics(messageType);
         } else {
             dHandler.setRandomGameStarted(false);
+            if (dHandler.getDefaultBalance() < 10.0) {
+                dHandler.setDefaultBalance(2000.0);
+            }
         }
         requireActivity().finish();
+    }
+
+    private void setStatistics(int messageType) {
+        switch (messageType) {
+            case -1:
+                dHandler.getUser().setGamesLost(dHandler.getUser().getGamesLost() + 1);
+                if (amount > dHandler.getUser().getUserMostMoneyLost()) {
+                    dHandler.getUser().setUserMostMoneyLost(amount);
+                }
+                if (dHandler.getGame().getUserBetAmount() > dHandler.getMostMoneyLost()) {
+                    dHandler.setMostMoneyLost(amount);
+                    dHandler.setUserMostMoneyLost(dHandler.getUser().getUsername());
+                }
+                if (dHandler.getUser().getBalance() < 10.0) {
+                    dHandler.getUser().setNumTimesBankrupted(dHandler.getUser().getNumTimesBankrupted() + 1);
+                    dHandler.getUser().setBalance(5000.0);
+                }
+                break;
+            case 0:
+                if (dHandler.isUserLoggedIn()) {
+                    dHandler.getUser().setBalance(dHandler.getUser().getBalance() + dHandler.getGame().getUserBetAmount());
+                } else {
+                    dHandler.setDefaultBalance(dHandler.getDefaultBalance() + dHandler.getGame().getUserBetAmount());
+                }
+                break;
+            case 1:
+                dHandler.getUser().setGamesWon(dHandler.getUser().getGamesWon() + 1);
+                if (amount > dHandler.getUser().getUserMostMoneyWon()) {
+                    dHandler.getUser().setUserMostMoneyWon(amount);
+                }
+                if (amount > dHandler.getMostMoneyWon()) {
+                    dHandler.setMostMoneyWon(amount);
+                    dHandler.setUserMostMoneyWon(dHandler.getUser().getUsername());
+                }
+                if (dHandler.isUserLoggedIn()) {
+                    dHandler.getUser().setBalance(dHandler.getUser().getBalance() + amount);
+                } else {
+                    dHandler.setDefaultBalance(dHandler.getDefaultBalance() + amount);
+                }
+                break;
+        }
     }
 
     private String fetchMessageType() {
