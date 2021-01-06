@@ -1,7 +1,6 @@
 package com.example.app_blackjack.model;
 
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class Game {

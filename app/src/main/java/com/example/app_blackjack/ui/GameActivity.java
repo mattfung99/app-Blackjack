@@ -41,8 +41,10 @@ public class GameActivity extends AppCompatActivity {
     private final ImageButton[] BETTING_CHIPS = new ImageButton[4];
     private ImageView hiddenCard;
 
+    // Globals
     private int dealerScoreBeforeStand;
-    private Handler handler = new Handler();
+    private boolean flagDisableButtons;
+    private final Handler handler = new Handler();
 
     private enum State {
         SELECT_BET,
@@ -98,12 +100,16 @@ public class GameActivity extends AppCompatActivity {
             case RESULT_LOSS:
                 this.setTitle(getString(R.string.result_loss, game.getUserBetAmount()));
                 setButtons(false);
-                createAlertDialog(-1);
+                if (!isDestroyed()) {
+                    createAlertDialog(-1);
+                }
                 break;
             case RESULT_PUSH:
                 this.setTitle(getString(R.string.result_push));
                 updateScoreboard();
-                createAlertDialog(0);
+                if (!isDestroyed()) {
+                    createAlertDialog(0);
+                }
                 break;
             case RESULT_WIN:
                 double wonAmount;
@@ -114,7 +120,42 @@ public class GameActivity extends AppCompatActivity {
                 }
                 this.setTitle(getString(R.string.result_win, wonAmount));
                 updateScoreboard();
-                createAlertDialog(1);
+                if (!isDestroyed()) {
+                    createAlertDialog(1);
+                }
+                break;
+        }
+    }
+
+    private void restoreCards() {
+        switch (State.valueOf(game.getCurrState())) {
+            case USER_GAMEPLAY:
+                restoreUserAndDealer();
+                textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerDeck().get(1).getCardValue()));
+                if (game.getUserScore() > 21) {
+                    System.out.println("delay");
+                    flagDisableButtons = true;
+                    validateUserScore();
+                }
+                break;
+            case DEALER_GAMEPLAY:
+                restoreUserAndDealer();
+                game.setDealerScore(0);
+                getScore(false, game.getDealerDeckSize());
+                if (game.getDealerScore() > game.getUserScore()) {
+                    skipDealerTurn();
+                }
+                break;
+            case RESULT_LOSS: case RESULT_PUSH: case RESULT_WIN:
+                expandContainer(game.getUserDeckSize() * (int)getResources().getDimension(R.dimen.container_space), true);
+                drawCards(true);
+                expandContainer(game.getDealerDeckSize () * (int)getResources().getDimension(R.dimen.container_space), false);
+                drawCards(false);
+                game.setUserScore(0);
+                game.setDealerScore(0);
+                getScore(true, game.getUserDeckSize());
+                getScore(false, game.getDealerDeckSize());
+                textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerScore()));
                 break;
         }
     }
@@ -140,7 +181,7 @@ public class GameActivity extends AppCompatActivity {
         {
             if (dHandler.isUserGameStarted()) {
                 game = dHandler.getGame();
-//                displayWidgets(true);
+                restoreCards();
             } else {
                 createGame(true);
                 dHandler.setUserGameStarted(true);
@@ -150,7 +191,7 @@ public class GameActivity extends AppCompatActivity {
         } else {
             if (dHandler.isRandomGameStarted()) {
                 game = dHandler.getGame();
-//                displayWidgets(false);
+                restoreCards();
             } else {
                 createGame(false);
                 dHandler.setRandomGameStarted(true);
@@ -158,6 +199,9 @@ public class GameActivity extends AppCompatActivity {
         }
         setupWidgets();
         stateMachine(State.valueOf(game.getCurrState()));
+        if (flagDisableButtons) {
+            setButtons(false);
+        }
         updateScoreboard();
     }
 
@@ -267,18 +311,27 @@ public class GameActivity extends AppCompatActivity {
 
     private void setupStandButton() {
         btnStand.setOnClickListener(v -> {
-            if (game.getDealerScore() > game.getUserScore()) {
-                setButtons(false);
-                revealHiddenCard();
-                textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerScore()));
-                runOnUiThread(() -> new Handler().postDelayed(() ->
-                        setState(State.valueOf("RESULT_LOSS").toString()), 3000)
-                );
+            if (game.getDealerScore() > game.getUserScore() || game.getDealerScore() == 21) {
+                System.out.println("Case 1");
+                skipDealerTurn();
+                System.out.println("Case 2");
             } else {
+                System.out.println("Case 1");
                 setDealerCards();
+                System.out.println("Case 2");
+                System.out.println(game);
                 setState(State.valueOf("DEALER_GAMEPLAY").toString());
             }
         });
+    }
+
+    private void skipDealerTurn() {
+        setButtons(false);
+        revealHiddenCard();
+        textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerScore()));
+        runOnUiThread(() -> new Handler().postDelayed(() ->
+                setState(State.valueOf("RESULT_LOSS").toString()), 3000)
+        );
     }
 
     private void validateDealerScore() {
@@ -411,6 +464,17 @@ public class GameActivity extends AppCompatActivity {
 //        saveGameInSharedPref();
     }
 
+    private void drawCards(boolean containerIndicator, int numCards) {
+        Card card;
+        for (int i = 0; i < numCards; i++) {
+            card = containerIndicator ?
+                    game.getUserDeck().get(i) :
+                    game.getDealerDeck().get(i);
+            ImageView ivCard = setCardProperties(card);
+            setCardProperties(ivCard, card, i, containerIndicator);
+        }
+    }
+
     private ImageView setCardProperties(Card card) {
         int resID = getResources().getIdentifier(card.getCardID(), "drawable", getPackageName());
         ImageView ivCard = new ImageView(this);
@@ -452,17 +516,17 @@ public class GameActivity extends AppCompatActivity {
         ivCard.setLayoutParams(layoutParams);
     }
 
-    private void createAlertDialog(int messageType) {
+    public void createAlertDialog(int messageType) {
         FragmentManager manager = getSupportFragmentManager();
         MessageFragment dialog;
         switch (messageType) {
             case -1:
-                dialog = new MessageFragment(messageType, game.getUserBetAmount(), getIntent());
+                dialog = new MessageFragment(-1, game.getUserBetAmount(), getIntent());
                 dialog.setCancelable(false);
                 dialog.show(manager, getString(R.string.message_fragment_title));
                 break;
             case 0:
-                dialog = new MessageFragment(messageType, getIntent());
+                dialog = new MessageFragment(0, getIntent());
                 dialog.setCancelable(false);
                 dialog.show(manager, getString(R.string.message_fragment_title));
                 break;
@@ -473,7 +537,7 @@ public class GameActivity extends AppCompatActivity {
                 } else {
                     wonAmount = 2 * game.getUserBetAmount();
                 }
-                dialog = new MessageFragment(messageType, wonAmount, getIntent());
+                dialog = new MessageFragment(1, wonAmount, getIntent());
                 dialog.setCancelable(false);
                 dialog.show(manager, getString(R.string.message_fragment_title));
                 break;
@@ -495,10 +559,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void doneDisplayDealerCard() {
         setTitle(3);
-        runOnUiThread(() -> new Handler().postDelayed(() -> {
-            System.out.println("case 2");
-            validateDealerScore();
-        }, 3000));
+        runOnUiThread(() -> new Handler().postDelayed(this::validateDealerScore, 3000));
     }
 
     private final Runnable runnable = new Runnable() {
@@ -532,6 +593,28 @@ public class GameActivity extends AppCompatActivity {
 
     public void setTitle(int index) {
         this.setTitle(getResources().getStringArray(R.array.game_instructions)[index]);
+    }
+
+    private void getScore(boolean containerIndicator, int numCards) {
+        Card card;
+        for (int i = 0; i < numCards; i++) {
+            card = containerIndicator ?
+                    game.getUserDeck().get(i) :
+                    game.getDealerDeck().get(i);
+            checkAceException(card, containerIndicator);
+        }
+    }
+
+    private void restoreUserAndDealer() {
+        expandContainer(game.getUserDeckSize() * (int)getResources().getDimension(R.dimen.container_space), true);
+        drawCards(true);
+        expandContainer(2 * (int)getResources().getDimension(R.dimen.container_space), false);
+        drawCards(false, 2);
+        game.setUserScore(0);
+        game.setDealerScore(0);
+        getScore(true, game.getUserDeckSize());
+        getScore(false, 2);
+        dealerScoreBeforeStand = game.getDealerScore();
     }
 
     private double fetchChipValue(int index) {
