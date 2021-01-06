@@ -87,10 +87,6 @@ public class Deck {
         return "Playing Deck\n" + createDeckStringOutput(true) + "\nUsed Deck\n" + createDeckStringOutput(false);
     }
 
-    public void createDeckStringOutput() {
-        System.out.println(createDeckStringOutput(false));
-    }
-
     private StringBuilder createDeckStringOutput(boolean deckIndicator) {
         StringBuilder output = new StringBuilder();
         for (Card c : (deckIndicator ? playingDeck : usedDeck)) {
