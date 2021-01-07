@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App_blackjack">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:label="@string/main_activity_name"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack">
@@ -24,33 +24,33 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.OptionsActivity"
+            android:name=".ui.activities.OptionsActivity"
             android:label="@string/options_activity_name"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
         <activity
-            android:name=".ui.UserLoginActivity"
+            android:name=".ui.activities.UserLoginActivity"
             android:label="@string/login_activity_name"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
         <activity
-            android:name=".ui.CreateUserActivity"
+            android:name=".ui.activities.CreateUserActivity"
             android:label="@string/create_user_activity_name"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
         <activity
-            android:name=".ui.ViewProfileActivity"
+            android:name=".ui.activities.ViewProfileActivity"
             android:label="@string/view_profile_activity_name"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
         <activity
-            android:name=".ui.GameActivity"
+            android:name=".ui.activities.GameActivity"
             android:label="@string/game_activity_name"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
 
@@ -58,13 +58,13 @@
         <activity
             android:name=".prototype.DeckTesterActivity"
             android:label="@string/deck_tester_activity_name"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
         <activity
             android:name=".prototype.GameTesterActivity"
             android:label="@string/game_tester_activity_name"
-            android:parentActivityName=".ui.MainActivity"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />
 

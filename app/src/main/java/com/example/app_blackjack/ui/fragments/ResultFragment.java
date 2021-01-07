@@ -1,4 +1,5 @@
-package com.example.app_blackjack.ui;
+package com.example.app_blackjack.ui.fragments;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -7,15 +8,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatDialogFragment;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.google.gson.Gson;
-
 import org.jetbrains.annotations.NotNull;
 import static android.content.Context.MODE_PRIVATE;
 
-public class ResultFragment extends AppCompatDialogFragment
+public class ResultFragment extends DefaultFragment
 {
     // Reference the singleton instance
     private final DataHandler dHandler = DataHandler.getInstance();
@@ -26,16 +25,21 @@ public class ResultFragment extends AppCompatDialogFragment
     private final Intent intent;
 
     public ResultFragment(int messageType, Intent intent) {
+        super("", "");
         this.messageType = messageType;
         this.amount = 0.0;
         this.intent = intent;
     }
 
     public ResultFragment(int messageType, double amount, Intent intent) {
+        super("", "");
         this.messageType = messageType;
         this.amount = amount;
         this.intent = intent;
     }
+
+    @Override
+    public void doAction() {}
 
     @NotNull
     @Override
@@ -45,7 +49,7 @@ public class ResultFragment extends AppCompatDialogFragment
 
         // Build the alert Dialog
         return new AlertDialog.Builder(getActivity())
-                .setTitle(getString(R.string.message_fragment_title))
+                .setTitle(getString(R.string.result_fragment_title))
                 .setMessage(fetchMessageType())
                 .setPositiveButton(getString(R.string.btn_positive), (dialog, which) -> resetGame())
                 .setNegativeButton(getString(R.string.btn_negative), (dialog, which) -> {
@@ -126,15 +130,6 @@ public class ResultFragment extends AppCompatDialogFragment
         }
     }
 
-    private void saveStatsIntoSharedPref() {
-        SharedPreferences statsPref = getActivity().getSharedPreferences("PREF_STATISTICS", MODE_PRIVATE);
-        SharedPreferences.Editor statsEditor = statsPref.edit();
-        statsEditor = putDouble(statsEditor, "allTimeMostMoneyWon", dHandler.getMostMoneyWon());
-        statsEditor.putString("allTimeMostMoneyWonUser", dHandler.getUserMostMoneyWon());
-        statsEditor = putDouble(statsEditor, "allTimeMostMoneyLost", dHandler.getMostMoneyLost());
-        statsEditor.putString("allTimeMostMoneyLostUser", dHandler.getUserMostMoneyLost());
-    }
-
     private String fetchMessageType() {
         switch (messageType) {
             case -1:
@@ -146,6 +141,15 @@ public class ResultFragment extends AppCompatDialogFragment
             default:
                 return getString(R.string.empty_string);
         }
+    }
+
+    private void saveStatsIntoSharedPref() {
+        SharedPreferences statsPref = getActivity().getSharedPreferences("PREF_STATISTICS", MODE_PRIVATE);
+        SharedPreferences.Editor statsEditor = statsPref.edit();
+        statsEditor = putDouble(statsEditor, "allTimeMostMoneyWon", dHandler.getMostMoneyWon());
+        statsEditor.putString("allTimeMostMoneyWonUser", dHandler.getUserMostMoneyWon());
+        statsEditor = putDouble(statsEditor, "allTimeMostMoneyLost", dHandler.getMostMoneyLost());
+        statsEditor.putString("allTimeMostMoneyLostUser", dHandler.getUserMostMoneyLost());
     }
 
     private void saveSessionOptionsIntoSharedPref() {

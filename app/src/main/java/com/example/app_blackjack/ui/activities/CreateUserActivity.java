@@ -1,4 +1,4 @@
-package com.example.app_blackjack.ui;
+package com.example.app_blackjack.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

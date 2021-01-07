@@ -1,4 +1,4 @@
-package com.example.app_blackjack.ui;
+package com.example.app_blackjack.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
+import com.example.app_blackjack.ui.fragments.OptionsFragment;
 import com.google.gson.Gson;
 import java.util.Objects;
 
@@ -121,10 +123,8 @@ public class OptionsActivity extends AppCompatActivity {
     private void selectDefaultOption(boolean rgBtnIndicator) {
         if (rgBtnIndicator) {
             if (dHandler.isUserLoggedIn()) {
-                System.out.println(dHandler.getUser().getNumDecks());
                 rgBtnNumDecks[dHandler.getUser().getNumDecks() - 1].setChecked(true);
             } else {
-                System.out.println(dHandler.getDefaultNumDecks());
                 rgBtnNumDecks[dHandler.getDefaultNumDecks() - 1].setChecked(true);
             }
         } else {
@@ -139,18 +139,14 @@ public class OptionsActivity extends AppCompatActivity {
     private void setupClearDataButton() {
         Button btnClearData = (Button)findViewById(R.id.btnClearData);
         btnClearData.setOnClickListener(v -> {
-            dHandler.clearData();
-            if (dHandler.isUserLoggedIn()) {
-                saveUserIntoSharedPref();
-                saveUserSessionIntoSharedPref(true);
-                Toast.makeText(this, getString(R.string.toast_user_reset), Toast.LENGTH_SHORT).show();
-            } else {
-                saveSessionIntoSharedPref();
-                saveUserSessionIntoSharedPref(false);
-                Toast.makeText(this, getString(R.string.toast_default_reset), Toast.LENGTH_SHORT).show();
-            }
-            dHandler.setDataCleared(true);
-            finish();
+            FragmentManager manager = getSupportFragmentManager();
+            OptionsFragment dialog = new OptionsFragment(
+                    getString(R.string.btn_clear_data),
+                    dHandler.isUserLoggedIn() ?
+                            getString(R.string.options_fragment_message) :
+                            getString(R.string.options_fragment_message_default)
+            );
+            dialog.show(manager, getString(R.string.btn_clear_data));
         });
     }
 
@@ -199,17 +195,6 @@ public class OptionsActivity extends AppCompatActivity {
         String json = gson.toJson(dHandler.getUser());
         userEditor.putString(dHandler.getUser().getUsername(), json);
         userEditor.apply();
-    }
-
-    private void saveUserSessionIntoSharedPref(boolean dataIndicator) {
-        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
-        SharedPreferences.Editor sessionEditor = sessionPref.edit();
-        if (dataIndicator) {
-            sessionEditor.putBoolean("userGameStarted", dHandler.isUserGameStarted());
-        } else {
-            sessionEditor.putBoolean("randomGameStarted", dHandler.isRandomGameStarted());
-        }
-        sessionEditor.apply();
     }
 
     private void saveSessionIntoSharedPref() {

@@ -125,10 +125,31 @@
     <string name="result_push">Push - Bet returned to user</string>
     <string name="toast_invalid_bet">You do not have enough money. Choose another bet</string>
 
-    <!--  MessageFragment  -->
-    <string name="message_fragment_title">Game Over</string>
+    <!--  ResultFragment  -->
+    <string name="result_fragment_title">Game Over</string>
     <string name="btn_positive">Leave</string>
     <string name="btn_negative">New game</string>
+
+    <!--  RestartFragment  -->
+    <string name="restart_fragment_message">
+        Restarting a game will count as a forfeit.
+        \n\nAre you sure you want to restart the game?
+    </string>
+    <string name="restart_fragment_message_default">
+        \nAre you sure you want to restart the game?
+    </string>
+
+    <!--  OptionsFragment  -->
+    <string name="options_fragment_message">
+        Clearing data will result in resetting this user\'s current game, stats, balance, and configurations to default.
+        \n\nNote: If this user currently holds a record for any All-Time statistic, the user will continue to hold
+        that record even after the data is cleared.
+        \n\nAre you sure you want to clear data?
+    </string>
+    <string name="options_fragment_message_default">
+        Clearing data will result in resetting the current game, balance, and configurations to default.
+        \n\nAre you sure you want to clear data?
+    </string>
 
     <!--  DeckTesterActivity  -->
     <string name="deck_tester_activity_name">Deck Tester</string>
