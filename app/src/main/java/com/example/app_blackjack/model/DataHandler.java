@@ -29,10 +29,13 @@ public class DataHandler {
     public void clearData() {
         if (userLoggedIn) {
             user.resetUser();
-            mostMoneyWon = 0.0;
-            mostMoneyLost = 0.0;
-            userMostMoneyWon = "error";
-            userMostMoneyLost = "error";
+
+            // Create a fragment indicating that user's stats will still be on all time record
+
+//            mostMoneyWon = 0.0;
+//            mostMoneyLost = 0.0;
+//            userMostMoneyWon = "error";
+//            userMostMoneyLost = "error";
             userGameStarted = false;
         } else {
             defaultNumDecks = 1;
