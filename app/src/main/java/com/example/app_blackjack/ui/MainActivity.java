@@ -3,10 +3,13 @@ package com.example.app_blackjack.ui;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println("Is created");
         setupButtons();
         if (!dHandler.isUserSessionLoadedFromSharedPref()) {
             retrieveUserSessionFromSharedPref();
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setMenuButtonsAppearance();
         invalidateOptionsMenu();
     }
 
@@ -55,12 +60,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateOptionsMenu(Menu menu) {
-//        System.out.println("userLoggedIn: " + dHandler.isUserLoggedIn());
-//        System.out.println("isUserGameStarted: " + dHandler.isUserGameStarted());
-//        System.out.println("isRandomUserGameStarted: " + dHandler.isRandomGameStarted());
-//        System.out.println("isUserLoadedFromSharedPref: " + dHandler.isUserLoadedFromSharedPref());
-//        System.out.println("isNonUserLoadedFromSharedPref: " + dHandler.isNonUserLoadedFromSharedPref());
-
         if (dHandler.isUserLoggedIn()) {
             if (!dHandler.isUserLoadedFromSharedPref()) {
                 retrieveUserFromSharedPref();
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 dHandler.setNonUserLoadedFromSharedPref(true);
             }
-            retrieveSessionOptions();
+            retrieveSessionOptionsIntoSharedPref();
             getMenuInflater().inflate(R.menu.not_logged_in_main, menu);
         }
     }
@@ -127,6 +126,16 @@ public class MainActivity extends AppCompatActivity {
     private void setupRestartButton() {
         Button btnRestart = (Button)findViewById(R.id.btnMenuRestart);
         btnRestart.setOnClickListener(v -> {
+            if (dHandler.isUserLoggedIn()) {
+                dHandler.setUserGameStarted(false);
+                dHandler.getUser().setThisUserGameStarted(false);
+                dHandler.getUser().setGamesForfeited(dHandler.getUser().getGamesForfeited() + 1);
+                saveUserIntoSharedPref();
+            } else {
+                dHandler.setRandomGameStarted(false);
+            }
+            saveUserSessionIntoSharedPref();
+            setMenuButtonsAppearance();
         });
     }
 
@@ -175,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_sign_out:
                 dHandler.setUser(new User("error", "error404", ""));
                 dHandler.setUserLoggedIn(false);
-                retrieveSessionOptions();
+                retrieveSessionOptionsIntoSharedPref();
                 if (dHandler.isRandomGameStarted()) {
                     retrieveGameFromSharedPref(dHandler.isUserLoggedIn());
                 }
@@ -186,6 +195,29 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setMenuButtonsAppearance() {
+        if (dHandler.isUserLoggedIn()) {
+            setMenuButtonsAppearance(dHandler.isUserGameStarted());
+        } else {
+            setMenuButtonsAppearance(dHandler.isRandomGameStarted());
+        }
+    }
+
+    private void setMenuButtonsAppearance(boolean isGameStarted) {
+        Button btnMenuStart = (Button)findViewById(R.id.btnMenuStart);
+        Button btnMenuRestart = (Button)findViewById(R.id.btnMenuRestart);
+        if (isGameStarted) {
+            btnMenuStart.setText(getString(R.string.menu_continue));
+            btnMenuRestart.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.default_text_color)));
+            btnMenuRestart.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.default_background_color)));
+        } else {
+            btnMenuStart.setText(getString(R.string.menu_start));
+            btnMenuRestart.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.faded_text_color)));
+            btnMenuRestart.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.faded_background_color)));
+        }
+        btnMenuRestart.setEnabled(isGameStarted);
     }
 
     private void retrieveGameFromSharedPref(boolean userLoggedIn) {
@@ -221,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         dHandler.setUserSessionLoadedFromSharedPref(true);
     }
 
-    private void retrieveSessionOptions() {
+    private void retrieveSessionOptionsIntoSharedPref() {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         dHandler.setDefaultNumDecks(sessionPref.getInt("defaultSettingsNumDecks", 1));
         dHandler.setDefaultChosenCardDesign(sessionPref.getString("defaultSettingsCardDesign", "blue"));
@@ -246,5 +278,25 @@ public class MainActivity extends AppCompatActivity {
         sessionEditor.putString("userSessionKey", "error");
         sessionEditor.putBoolean("userLoggedIn", userNotLoggedOut);
         sessionEditor.apply();
+    }
+
+    private void saveUserSessionIntoSharedPref() {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences.Editor sessionEditor = sessionPref.edit();
+        if (dHandler.isUserLoggedIn()) {
+            sessionEditor.putBoolean("userGameStarted", dHandler.isUserGameStarted());
+        } else {
+            sessionEditor.putBoolean("randomGameStarted", dHandler.isRandomGameStarted());
+        }
+        sessionEditor.apply();
+    }
+
+    private void saveUserIntoSharedPref() {
+        SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
+        SharedPreferences.Editor userEditor = userPref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(dHandler.getUser());
+        userEditor.putString(dHandler.getUser().getUsername(), json);
+        userEditor.apply();
     }
 }

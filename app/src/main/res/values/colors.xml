@@ -19,6 +19,8 @@
     <!--  Main customized  -->
     <color name="menu_background_color">#27530F</color>
     <color name="button_border_color">#594633</color>
+    <color name="faded_background_color">#25451E</color>
+    <color name="faded_text_color">#636032</color>
 
     <!--  CreateUser customized  -->
     <color name="invalid_red">#F44336</color>

@@ -133,7 +133,6 @@ public class GameActivity extends AppCompatActivity {
                 restoreUserAndDealer();
                 textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerDeck().get(1).getCardValue()));
                 if (game.getUserScore() > 21) {
-                    System.out.println("delay");
                     flagDisableButtons = true;
                     validateUserScore();
                 }
@@ -147,6 +146,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 break;
             case RESULT_LOSS: case RESULT_PUSH: case RESULT_WIN:
+                flagDisableButtons = true;
                 expandContainer(game.getUserDeckSize() * (int)getResources().getDimension(R.dimen.container_space), true);
                 drawCards(true);
                 expandContainer(game.getDealerDeckSize () * (int)getResources().getDimension(R.dimen.container_space), false);
@@ -162,6 +162,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void setState(String currState) {
         game.setCurrState(currState);
+        saveGameIntoSharedPref();
         stateMachine(State.valueOf(game.getCurrState()));
     }
 
@@ -186,7 +187,9 @@ public class GameActivity extends AppCompatActivity {
                 createGame(true);
                 dHandler.setUserGameStarted(true);
                 dHandler.getUser().setThisUserGameStarted(true);
-//                saveUserIntoSharedPref();
+                saveUserIntoSharedPref();
+                saveUserSessionIntoSharedPref();
+                saveGameIntoSharedPref();
             }
         } else {
             if (dHandler.isRandomGameStarted()) {
@@ -195,12 +198,16 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 createGame(false);
                 dHandler.setRandomGameStarted(true);
+                saveUserSessionIntoSharedPref();
+                saveGameIntoSharedPref();
             }
         }
         setupWidgets();
         stateMachine(State.valueOf(game.getCurrState()));
         if (flagDisableButtons) {
             setButtons(false);
+            revealHiddenCard();
+            flagDisableButtons = false;
         }
         updateScoreboard();
     }
@@ -244,6 +251,7 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 game.setUserBetAmount(fetchChipValue(index));
                 dHandler.getUser().setBalance(dHandler.getUser().getBalance() - fetchChipValue(index));
+                saveGameProgressIntoSharedPref();
                 betValidated();
             }
         } else {
@@ -252,6 +260,7 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 game.setUserBetAmount(fetchChipValue(index));
                 dHandler.setDefaultBalance(dHandler.getDefaultBalance() - fetchChipValue(index));
+                saveGameProgressIntoSharedPref();
                 betValidated();
             }
         }
@@ -271,6 +280,7 @@ public class GameActivity extends AppCompatActivity {
             setCardMargin(ivCard);
             containerUserCards.addView(ivCard);
             checkAceException(cardDrawn, true);
+            saveGameIntoSharedPref();
             validateUserScore();
             updateScoreboard();
         });
@@ -312,14 +322,9 @@ public class GameActivity extends AppCompatActivity {
     private void setupStandButton() {
         btnStand.setOnClickListener(v -> {
             if (game.getDealerScore() > game.getUserScore() || game.getDealerScore() == 21) {
-                System.out.println("Case 1");
                 skipDealerTurn();
-                System.out.println("Case 2");
             } else {
-                System.out.println("Case 1");
                 setDealerCards();
-                System.out.println("Case 2");
-                System.out.println(game);
                 setState(State.valueOf("DEALER_GAMEPLAY").toString());
             }
         });
@@ -385,6 +390,7 @@ public class GameActivity extends AppCompatActivity {
         Card cardDrawn = game.getDeck().drawCard();
         game.addCardDealerDeck(cardDrawn);
         checkAceException(cardDrawn, false);
+        saveGameIntoSharedPref();
     }
 
     private int getRand() {
@@ -518,15 +524,15 @@ public class GameActivity extends AppCompatActivity {
 
     public void createAlertDialog(int messageType) {
         FragmentManager manager = getSupportFragmentManager();
-        MessageFragment dialog;
+        ResultFragment dialog;
         switch (messageType) {
             case -1:
-                dialog = new MessageFragment(-1, game.getUserBetAmount(), getIntent());
+                dialog = new ResultFragment(-1, game.getUserBetAmount(), getIntent());
                 dialog.setCancelable(false);
                 dialog.show(manager, getString(R.string.message_fragment_title));
                 break;
             case 0:
-                dialog = new MessageFragment(0, getIntent());
+                dialog = new ResultFragment(0, getIntent());
                 dialog.setCancelable(false);
                 dialog.show(manager, getString(R.string.message_fragment_title));
                 break;
@@ -537,7 +543,7 @@ public class GameActivity extends AppCompatActivity {
                 } else {
                     wonAmount = 2 * game.getUserBetAmount();
                 }
-                dialog = new MessageFragment(1, wonAmount, getIntent());
+                dialog = new ResultFragment(1, wonAmount, getIntent());
                 dialog.setCancelable(false);
                 dialog.show(manager, getString(R.string.message_fragment_title));
                 break;
@@ -656,22 +662,48 @@ public class GameActivity extends AppCompatActivity {
         userEditor.apply();
     }
 
-    private void saveGameInSharedPref() {
+    private void saveSessionOptionsIntoSharedPref() {
         SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
+        sessionEditor = putDouble(sessionEditor, "defaultBalance", dHandler.getDefaultBalance());
+        sessionEditor.apply();
+    }
+
+    private SharedPreferences.Editor putDouble(final SharedPreferences.Editor edit, final String key, final double value) {
+        return edit.putLong(key, Double.doubleToRawLongBits(value));
+    }
+
+    private void saveUserSessionIntoSharedPref() {
+        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences.Editor sessionEditor = sessionPref.edit();
+        if (dHandler.isUserLoggedIn()) {
+            sessionEditor.putBoolean("userGameStarted", dHandler.isUserGameStarted());
+        } else {
+            sessionEditor.putBoolean("randomGameStarted", dHandler.isRandomGameStarted());
+        }
+        sessionEditor.apply();
+    }
+
+    private void saveGameIntoSharedPref() {
         SharedPreferences gamePref = getSharedPreferences("PREF_GAMES", MODE_PRIVATE);
         SharedPreferences.Editor gameEditor = gamePref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(game);
         if (dHandler.isUserLoggedIn()) {
             gameEditor.putString(dHandler.getUser().getUsername() + "Game", json);
-            sessionEditor.putBoolean("userGameStarted", dHandler.isUserGameStarted());
         } else {
             gameEditor.putString("randomGame", json);
-            sessionEditor.putBoolean("randomGameStarted", dHandler.isRandomGameStarted());
         }
         gameEditor.apply();
-        sessionEditor.apply();
+    }
+
+    private void saveGameProgressIntoSharedPref() {
+        if (dHandler.isUserLoggedIn()) {
+            saveUserIntoSharedPref();
+        } else {
+            saveSessionOptionsIntoSharedPref();
+        }
+        saveGameIntoSharedPref();
     }
 
     public static Intent makeIntent(Context context) {
