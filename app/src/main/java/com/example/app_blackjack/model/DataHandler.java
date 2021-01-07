@@ -29,7 +29,6 @@ public class DataHandler {
     public void clearData() {
         if (userLoggedIn) {
             user.resetUser();
-            // Create a fragment indicating that user's stats will still be on all time record
             userGameStarted = false;
         } else {
             defaultNumDecks = 1;

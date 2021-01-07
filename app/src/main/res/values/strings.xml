@@ -133,11 +133,22 @@
     <!--  RestartFragment  -->
     <string name="restart_fragment_message">
         Restarting a game will count as a forfeit.
+        \n\nAre you sure you want to restart the game?
+    </string>
+    <string name="restart_fragment_message_default">
         \nAre you sure you want to restart the game?
     </string>
 
-    <string name="restart_fragment_message_default">
-        Are you sure you want to restart the game?
+    <!--  OptionsFragment  -->
+    <string name="options_fragment_message">
+        Clearing data will result in resetting this user\'s current game, stats, balance, and configurations to default.
+        \n\nNote: If this user currently holds a record for any All-Time statistic, the user will continue to hold
+        that record even after the data is cleared.
+        \n\nAre you sure you want to clear data?
+    </string>
+    <string name="options_fragment_message_default">
+        Clearing data will result in resetting the current game, balance, and configurations to default.
+        \n\nAre you sure you want to clear data?
     </string>
 
     <!--  DeckTesterActivity  -->
