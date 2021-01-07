@@ -125,10 +125,20 @@
     <string name="result_push">Push - Bet returned to user</string>
     <string name="toast_invalid_bet">You do not have enough money. Choose another bet</string>
 
-    <!--  MessageFragment  -->
-    <string name="message_fragment_title">Game Over</string>
+    <!--  ResultFragment  -->
+    <string name="result_fragment_title">Game Over</string>
     <string name="btn_positive">Leave</string>
     <string name="btn_negative">New game</string>
+
+    <!--  RestartFragment  -->
+    <string name="restart_fragment_message">
+        Restarting a game will count as a forfeit.
+        \nAre you sure you want to restart the game?
+    </string>
+
+    <string name="restart_fragment_message_default">
+        Are you sure you want to restart the game?
+    </string>
 
     <!--  DeckTesterActivity  -->
     <string name="deck_tester_activity_name">Deck Tester</string>

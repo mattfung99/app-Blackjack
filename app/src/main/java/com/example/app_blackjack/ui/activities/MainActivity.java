@@ -1,4 +1,4 @@
-package com.example.app_blackjack.ui;
+package com.example.app_blackjack.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
+import androidx.fragment.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -18,6 +18,7 @@ import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.example.app_blackjack.model.Game;
 import com.example.app_blackjack.model.User;
+import com.example.app_blackjack.ui.fragments.RestartFragment;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println("Is created");
         setupButtons();
         if (!dHandler.isUserSessionLoadedFromSharedPref()) {
             retrieveUserSessionFromSharedPref();
@@ -126,16 +126,14 @@ public class MainActivity extends AppCompatActivity {
     private void setupRestartButton() {
         Button btnRestart = (Button)findViewById(R.id.btnMenuRestart);
         btnRestart.setOnClickListener(v -> {
-            if (dHandler.isUserLoggedIn()) {
-                dHandler.setUserGameStarted(false);
-                dHandler.getUser().setThisUserGameStarted(false);
-                dHandler.getUser().setGamesForfeited(dHandler.getUser().getGamesForfeited() + 1);
-                saveUserIntoSharedPref();
-            } else {
-                dHandler.setRandomGameStarted(false);
-            }
-            saveUserSessionIntoSharedPref();
-            setMenuButtonsAppearance();
+            FragmentManager manager = getSupportFragmentManager();
+            RestartFragment dialog = new RestartFragment(
+                    getString(R.string.menu_restart),
+                    dHandler.isUserLoggedIn() ?
+                            getString(R.string.restart_fragment_message) :
+                            getString(R.string.restart_fragment_message_default)
+            );
+            dialog.show(manager, getString(R.string.menu_restart));
         });
     }
 
@@ -278,25 +276,5 @@ public class MainActivity extends AppCompatActivity {
         sessionEditor.putString("userSessionKey", "error");
         sessionEditor.putBoolean("userLoggedIn", userNotLoggedOut);
         sessionEditor.apply();
-    }
-
-    private void saveUserSessionIntoSharedPref() {
-        SharedPreferences sessionPref = getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
-        SharedPreferences.Editor sessionEditor = sessionPref.edit();
-        if (dHandler.isUserLoggedIn()) {
-            sessionEditor.putBoolean("userGameStarted", dHandler.isUserGameStarted());
-        } else {
-            sessionEditor.putBoolean("randomGameStarted", dHandler.isRandomGameStarted());
-        }
-        sessionEditor.apply();
-    }
-
-    private void saveUserIntoSharedPref() {
-        SharedPreferences userPref = getSharedPreferences("PREF_USERS", MODE_PRIVATE);
-        SharedPreferences.Editor userEditor = userPref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(dHandler.getUser());
-        userEditor.putString(dHandler.getUser().getUsername(), json);
-        userEditor.apply();
     }
 }

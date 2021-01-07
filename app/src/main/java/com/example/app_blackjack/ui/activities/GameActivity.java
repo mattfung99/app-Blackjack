@@ -1,4 +1,4 @@
-package com.example.app_blackjack.ui;
+package com.example.app_blackjack.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.Card;
 import com.example.app_blackjack.model.DataHandler;
 import com.example.app_blackjack.model.Game;
+import com.example.app_blackjack.ui.fragments.ResultFragment;
 import com.google.gson.Gson;
 import java.util.Objects;
 
@@ -529,12 +530,12 @@ public class GameActivity extends AppCompatActivity {
             case -1:
                 dialog = new ResultFragment(-1, game.getUserBetAmount(), getIntent());
                 dialog.setCancelable(false);
-                dialog.show(manager, getString(R.string.message_fragment_title));
+                dialog.show(manager, getString(R.string.result_fragment_title));
                 break;
             case 0:
                 dialog = new ResultFragment(0, getIntent());
                 dialog.setCancelable(false);
-                dialog.show(manager, getString(R.string.message_fragment_title));
+                dialog.show(manager, getString(R.string.result_fragment_title));
                 break;
             case 1:
                 double wonAmount;
@@ -545,7 +546,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 dialog = new ResultFragment(1, wonAmount, getIntent());
                 dialog.setCancelable(false);
-                dialog.show(manager, getString(R.string.message_fragment_title));
+                dialog.show(manager, getString(R.string.result_fragment_title));
                 break;
         }
     }
