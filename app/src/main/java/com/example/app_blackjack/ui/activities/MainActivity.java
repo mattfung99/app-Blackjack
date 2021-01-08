@@ -18,6 +18,7 @@ import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.example.app_blackjack.model.Game;
 import com.example.app_blackjack.model.User;
+import com.example.app_blackjack.prototype.DeckTesterActivity;
 import com.example.app_blackjack.ui.fragments.RestartFragment;
 import com.google.gson.Gson;
 import java.io.File;
@@ -148,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupHelpButton() {
         Button btnHelp = (Button)findViewById(R.id.btnMenuHelp);
         btnHelp.setOnClickListener(v -> {
+            Intent optionsIntent = DeckTesterActivity.makeIntent(MainActivity.this);
+            startActivity(optionsIntent);
         });
     }
 

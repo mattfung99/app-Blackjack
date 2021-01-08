@@ -8,4 +8,9 @@
     <dimen name="card_height">91dp</dimen>
     <dimen name="card_margin">-51dp</dimen>
     <dimen name="container_space">10dp</dimen>
+
+    <dimen name="deck_card_start">67dp</dimen>
+    <dimen name="deck_card_top">225dp</dimen>
+    <dimen name="deck_card_end">591dp</dimen>
+    <dimen name="deck_card_bottom">142dp</dimen>
 </resources>
