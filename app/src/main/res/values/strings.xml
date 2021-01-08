@@ -6,6 +6,9 @@
     -->
     <string name="todo">TODO</string>
 
+    <!--  BootupActivity  -->
+    <string name="bootup_sub_title">[Version 1.0] | Developed by Matt Fung</string>
+
     <!-- MainActivity   -->
     <string name="main_activity_name">Menu</string>
     <string name="menu_title">Blackjack</string>
@@ -159,5 +162,4 @@
     <!--  GameTesterActivity  -->
     <string name="game_tester_activity_name">Game Tester</string>
     <string name="test_display_card_name_default">Card: (none)</string>
-
 </resources>
