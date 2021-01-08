@@ -1,5 +1,7 @@
 package com.example.app_blackjack.prototype;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +40,11 @@ public class DeckTesterActivity extends AppCompatActivity {
             int resID = getResources().getIdentifier(cardDrawn.getCardID() , "drawable", getPackageName());
             displayCard.setImageResource(resID);
             System.out.println(deck.getUsedDeck().get(deck.getNumCardsUsed() - 1).getCardID());
+            ObjectAnimator animation = ObjectAnimator.ofFloat(displayCard, "x", -30f);
+            animation.setDuration(1000);
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(animation);
+            animatorSet.start();
         });
     }
 

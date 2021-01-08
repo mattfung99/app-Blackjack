@@ -28,9 +28,40 @@
             android:layout_width="60dp"
             android:layout_height="91dp"
             android:layout_gravity="center"
-            android:orientation="horizontal">
-        </LinearLayout>
+            android:orientation="horizontal"></LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/card3"
+        android:layout_width="60dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="672dp"
+        android:layout_marginTop="101dp"
+        android:layout_marginBottom="219dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue" />
+
+    <ImageView
+        android:id="@+id/card4"
+        android:layout_width="60dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="672dp"
+        android:layout_marginTop="101dp"
+        android:layout_marginBottom="219dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue" />
 
     <TextView
         android:id="@+id/game_title"
@@ -100,6 +131,75 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/blue_flipped" />
 
+    <ImageView
+        android:id="@+id/deckCard4"
+        android:layout_width="91dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="591dp"
+        android:layout_marginBottom="142dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_flipped" />
+
+    <ImageView
+        android:id="@+id/deckCard5"
+        android:layout_width="91dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="591dp"
+        android:layout_marginBottom="142dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_flipped" />
+
+    <ImageView
+        android:id="@+id/deckCard6"
+        android:layout_width="91dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="591dp"
+        android:layout_marginBottom="142dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_flipped" />
+
+    <ImageView
+        android:id="@+id/deckCard7"
+        android:layout_width="91dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="225dp"
+        android:layout_marginEnd="591dp"
+        android:layout_marginBottom="142dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue_flipped" />
+
+
     <LinearLayout
         android:id="@+id/layoutUserCards"
         android:layout_width="650dp"
@@ -124,6 +224,38 @@
             android:orientation="horizontal" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/card1"
+        android:layout_width="60dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="672dp"
+        android:layout_marginTop="301dp"
+        android:layout_marginBottom="19dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue" />
+
+    <ImageView
+        android:id="@+id/card2"
+        android:layout_width="60dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="672dp"
+        android:layout_marginTop="301dp"
+        android:layout_marginBottom="19dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blue" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scoreBoard"

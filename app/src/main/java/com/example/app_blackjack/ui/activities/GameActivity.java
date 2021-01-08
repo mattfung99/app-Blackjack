@@ -1,11 +1,14 @@
 package com.example.app_blackjack.ui.activities;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -38,7 +41,8 @@ public class GameActivity extends AppCompatActivity {
     private Button btnStand;
     private LinearLayout containerDealerCards;
     private LinearLayout containerUserCards;
-    private final ImageView[] DECK_CARDS = new ImageView[3];
+    private final ImageView[] ANIMATE_CARDS = new ImageView[4];
+    private final ImageView[] DECK_CARDS = new ImageView[7];
     private final ImageButton[] BETTING_CHIPS = new ImageButton[4];
     private ImageView hiddenCard;
 
@@ -46,6 +50,8 @@ public class GameActivity extends AppCompatActivity {
     private int dealerScoreBeforeStand;
     private boolean flagDisableButtons;
     private final Handler handler = new Handler();
+    private final Handler animateDeckHandler = new Handler();
+    private final Handler animateHandHandler = new Handler();
 
     private enum State {
         SELECT_BET,
@@ -84,7 +90,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case DEAL_CARDS:
                 dealCards();
-                textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerDeck().get(1).getCardValue()));
+                animateDeckDefault();
                 break;
             case USER_GAMEPLAY:
                 this.setTitle(getResources().getStringArray(R.array.game_instructions)[1]);
@@ -130,6 +136,9 @@ public class GameActivity extends AppCompatActivity {
 
     private void restoreCards() {
         switch (State.valueOf(game.getCurrState())) {
+            case DEAL_CARDS:
+                this.setTitle(getResources().getStringArray(R.array.game_instructions)[1]);
+                break;
             case USER_GAMEPLAY:
                 restoreUserAndDealer();
                 textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerDeck().get(1).getCardValue()));
@@ -214,27 +223,40 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupWidgets() {
+        setupAnimateCards();
         setupDeckCards();
         setupBettingChips();
         setupHitButton();
         setupStandButton();
     }
 
+    private void setupAnimateCards() {
+        int index = 1,
+                resID;
+        for (ImageView deckCard : ANIMATE_CARDS) {
+            resID = getResources().getIdentifier("card" + index , "id", getPackageName());
+            deckCard = (ImageView) findViewById(resID);
+            ANIMATE_CARDS[index - 1] = deckCard;
+            index++;
+        }
+    }
+
     private void setupDeckCards() {
         int index = 1,
-            resID;
+                resID;
         for (ImageView deckCard : DECK_CARDS) {
             resID = getResources().getIdentifier("deckCard" + index , "id", getPackageName());
             deckCard = (ImageView) findViewById(resID);
             resID = getResources().getIdentifier(game.getGameChosenCardDesign() + "_flipped", "drawable", getPackageName());
             deckCard.setImageResource(resID);
+            DECK_CARDS[index - 1] = deckCard;
             index++;
         }
     }
 
     private void setupBettingChips() {
         int index = 0,
-            resID;
+                resID;
         for (ImageButton imBtn : BETTING_CHIPS) {
             resID = getResources().getIdentifier("imageBtn" + fetchChipName(index) , "id", getPackageName());
             imBtn = (ImageButton) findViewById(resID);
@@ -282,8 +304,17 @@ public class GameActivity extends AppCompatActivity {
             containerUserCards.addView(ivCard);
             checkAceException(cardDrawn, true);
             saveGameIntoSharedPref();
-            validateUserScore();
-            updateScoreboard();
+            int[] location = new int[2];
+            containerUserCards.getChildAt(game.getUserDeckSize() - 1).getLocationOnScreen(location);
+            ivCard.setVisibility(View.INVISIBLE);
+            animateDeck(3);
+            animateCard(cardDrawn, location, 0, true);
+            runOnUiThread(() -> new Handler().postDelayed(() -> {
+                    ivCard.setVisibility(View.VISIBLE);
+                    validateUserScore();
+                    updateScoreboard();
+                }, 1750)
+            );
         });
     }
 
@@ -315,7 +346,7 @@ public class GameActivity extends AppCompatActivity {
         if (game.getUserScore() > 21) {
             setButtons(false);
             runOnUiThread(() -> new Handler().postDelayed(() ->
-                setState(State.valueOf("RESULT_LOSS").toString()), 3000)
+                    setState(State.valueOf("RESULT_LOSS").toString()), 3000)
             );
         }
     }
@@ -445,8 +476,24 @@ public class GameActivity extends AppCompatActivity {
         drawCards(true);
         expandContainer(game.getDealerDeckSize() * (int)getResources().getDimension(R.dimen.container_space), false);
         drawCards(false);
-        updateScoreboard();
-        setState(State.valueOf("USER_GAMEPLAY").toString());
+        for (int i = 0; i < 2; i++) {
+            containerUserCards.getChildAt(i).setVisibility(View.INVISIBLE);
+            containerDealerCards.getChildAt(i).setVisibility(View.INVISIBLE);
+        }
+        runOnUiThread(() -> new Handler().postDelayed(() -> {
+                    containerUserCards.getChildAt(0).setVisibility(View.VISIBLE);
+                    containerDealerCards.getChildAt(0).setVisibility(View.VISIBLE);
+
+                }, 1880)
+        );
+        runOnUiThread(() -> new Handler().postDelayed(() -> {
+                    containerUserCards.getChildAt(1).setVisibility(View.VISIBLE);
+                    containerDealerCards.getChildAt(1).setVisibility(View.VISIBLE);
+                    textDealerScore.setText(getString(R.string.text_dealer_score, game.getDealerDeck().get(1).getCardValue()));
+                    updateScoreboard();
+                    setState(State.valueOf("USER_GAMEPLAY").toString());
+                }, 1980)
+        );
     }
 
     private void expandContainer(int addedWidth, boolean containerIndicator) {
@@ -468,7 +515,6 @@ public class GameActivity extends AppCompatActivity {
             index++;
         }
         dealerScoreBeforeStand = game.getDealerScore();
-//        saveGameInSharedPref();
     }
 
     private void drawCards(boolean containerIndicator, int numCards) {
@@ -577,7 +623,7 @@ public class GameActivity extends AppCompatActivity {
             flagEnd = displayDealerCard(index);
             index++;
             if (!flagEnd) {
-                handler.postDelayed(this, 3000);
+                handler.postDelayed(this, 4000);
             }
         }
     };
@@ -594,7 +640,16 @@ public class GameActivity extends AppCompatActivity {
         setCardMargin(ivCard);
         containerDealerCards.addView(ivCard);
         checkAceException(cardDrawn);
-        textDealerScore.setText(getString(R.string.text_dealer_score, dealerScoreBeforeStand));
+        int[] location = new int[2];
+        containerDealerCards.getChildAt(index).getLocationOnScreen(location);
+        ivCard.setVisibility(View.INVISIBLE);
+        animateDeck(3);
+        animateCard(cardDrawn, location, 2, false);
+        runOnUiThread(() -> new Handler().postDelayed(() -> {
+                    ivCard.setVisibility(View.VISIBLE);
+                    textDealerScore.setText(getString(R.string.text_dealer_score, dealerScoreBeforeStand));
+                }, 1750)
+        );
         return false;
     }
 
@@ -622,6 +677,105 @@ public class GameActivity extends AppCompatActivity {
         getScore(true, game.getUserDeckSize());
         getScore(false, 2);
         dealerScoreBeforeStand = game.getDealerScore();
+    }
+
+    private void animateDeckDefault() {
+        animateDeckHandler.postDelayed(animateDeckRunnable, 0);
+        animateHandHandler.postDelayed(animateHandRunnable, 100);
+    }
+
+    private final Runnable animateDeckRunnable = new Runnable() {
+        int deckIndex = 3;
+        @Override
+        public void run() {
+            animateDeck(deckIndex);
+            deckIndex++;
+            if (deckIndex == 7) {
+                animateDeckHandler.removeCallbacks(animateDeckRunnable);
+            } else {
+                animateDeckHandler.postDelayed(this, 100);
+            }
+        }
+    };
+
+    private final Runnable animateHandRunnable = new Runnable() {
+        int cardIndex = 0;
+        @Override
+        public void run() {
+            int[] userLocation = new int[2];
+            containerUserCards.getChildAt(cardIndex).getLocationOnScreen(userLocation);
+            int[] dealerLocation = new int[2];
+            containerDealerCards.getChildAt(cardIndex).getLocationOnScreen(dealerLocation);
+            animateCard(game.getUserDeck().get(cardIndex), userLocation, cardIndex);
+            animateCard(game.getDealerDeck().get(cardIndex), dealerLocation, cardIndex + 2);
+            cardIndex++;
+            if (cardIndex == 2) {
+                animateHandHandler.removeCallbacks(animateHandRunnable);
+            } else {
+                animateHandHandler.postDelayed(this, 100);
+            }
+        }
+    };
+
+    private void animateDeck(int index) {
+        ImageView ivCard = DECK_CARDS[index];
+        int[] location = new int[2];
+        ivCard.getLocationOnScreen(location);
+        runOnUiThread(() -> new Handler().postDelayed(() -> {
+                ivCard.setVisibility(View.INVISIBLE);
+                animateObject(ivCard, Float.parseFloat(location[0] + "f"), 0);
+            }, 201)
+        );
+        ivCard.setVisibility(View.VISIBLE);
+        animateObject(ivCard, -250f, 200);
+        ivCard.setVisibility(View.VISIBLE);
+    }
+
+    private void animateCard(Card cardDrawn, int[] location, int cardNum) {
+        ImageView ivCard = ANIMATE_CARDS[cardNum];
+        int[] ogLocation = new int[2];
+        ivCard.getLocationOnScreen(ogLocation);
+        int resID = (cardNum == 2) ?
+                getResources().getIdentifier(game.getGameChosenCardDesign(), "drawable", getPackageName()) :
+                getResources().getIdentifier(cardDrawn.getCardID(), "drawable", getPackageName());
+        ivCard.setImageResource(resID);
+        animateObject(ivCard, 4000f, 0);
+        runOnUiThread(() -> new Handler().postDelayed(() -> {
+                    ivCard.setVisibility(View.INVISIBLE);
+                    animateObject(ivCard, Float.parseFloat(ogLocation[0] + "f"), 0);
+                }, 1801)
+        );
+        ivCard.setVisibility(View.VISIBLE);
+        animateObject(ivCard, Float.parseFloat(location[0] + "f"), 1800);
+    }
+
+    private void animateCard(Card cardDrawn, int[] location, int cardNum, boolean turnIndicator) {
+        ImageView ivCard = ANIMATE_CARDS[cardNum];
+        int[] ogLocation = new int[2];
+        ivCard.getLocationOnScreen(ogLocation);
+        int resID = getResources().getIdentifier(cardDrawn.getCardID(), "drawable", getPackageName());
+        ivCard.setImageResource(resID);
+        animateObject(ivCard, 4000f, 0);
+        runOnUiThread(() -> new Handler().postDelayed(() -> {
+                    if (game.getUserScore() <= 21) {
+                        setButtons(turnIndicator);
+                    }
+                    ivCard.setVisibility(View.INVISIBLE);
+                    animateObject(ivCard, Float.parseFloat(ogLocation[0] + "f"), 0);
+                }, 1801)
+        );
+        setButtons(false);
+        ivCard.setVisibility(View.VISIBLE);
+        location[0] += turnIndicator ? 30 * (game.getUserDeckSize() - 2) : 30 * (game.getDealerDeckSize() - 2);
+        animateObject(ivCard, Float.parseFloat(location[0] + "f"), 1800);
+    }
+
+    private void animateObject(ImageView iv, float pos, int duration) {
+        ObjectAnimator animation = ObjectAnimator.ofFloat(iv, "x", pos);
+        animation.setDuration(duration);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animation);
+        animatorSet.start();
     }
 
     private double fetchChipValue(int index) {
