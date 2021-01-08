@@ -1,6 +1,7 @@
 package com.example.app_blackjack.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -18,7 +19,6 @@ import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.example.app_blackjack.model.Game;
 import com.example.app_blackjack.model.User;
-import com.example.app_blackjack.prototype.DeckTesterActivity;
 import com.example.app_blackjack.ui.fragments.RestartFragment;
 import com.google.gson.Gson;
 import java.io.File;
@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupHelpButton() {
         Button btnHelp = (Button)findViewById(R.id.btnMenuHelp);
         btnHelp.setOnClickListener(v -> {
-            Intent optionsIntent = DeckTesterActivity.makeIntent(MainActivity.this);
-            startActivity(optionsIntent);
+//            Intent helpIntent = HelpActivity.makeIntent(MainActivity.this);
+//            startActivity(helpIntent);
         });
     }
 
@@ -279,5 +279,9 @@ public class MainActivity extends AppCompatActivity {
         sessionEditor.putString("userSessionKey", "error");
         sessionEditor.putBoolean("userLoggedIn", userNotLoggedOut);
         sessionEditor.apply();
+    }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, MainActivity.class);
     }
 }

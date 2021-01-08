@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gameLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/menu_background">
+
+    <TextView
+        android:id="@+id/gameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="151dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginBottom="180dp"
+        android:fontFamily="@font/monofett"
+        android:text="@string/menu_title"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="@color/default_text_color"
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gameSubTitle"
+        android:layout_width="244dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="243dp"
+        android:layout_marginTop="253dp"
+        android:layout_marginEnd="244dp"
+        android:layout_marginBottom="127dp"
+        android:text="@string/bootup_sub_title"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/flyingCard"
+        android:layout_width="61dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="670dp"
+        android:layout_marginBottom="123dp"
+        android:contentDescription="@string/todo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sa_flipped" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
