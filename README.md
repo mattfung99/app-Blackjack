@@ -2,7 +2,7 @@
 A rendition of the classic casino game Blackjack
 <br><br>
 Rules
-<br><br>
+<br>
 The motive of the game is to beat the dealer by getting a hand of cards where the count is as close to 21 as<br>
 possible. The player will start off by selecting a bet of $10, $25, $50 or $100. Once a bet is selected, both the<br>
 user and dealer will start off with two cards. The dealer\'s first card will be hidden so the player will only know<br>
@@ -23,7 +23,7 @@ Push: Bet returned<br>
 Loss: Lose bet amount<br>
 <br><br>
 Features
-<br><br>
+<br>
 * Player Account - Allows the player to create an account to save the user's game progress, view user stats, and configure game options<br>
   Note: If the player does not make an account, the player will not be able to view user stats<br>
 * Autosave Game Progress - Game progress is saved whenever the player leaves the game screen<br>
@@ -32,7 +32,7 @@ Features
 Credits
 <br>
 Start Icon: https://www.pinclipart.com/picdir/middle/108-1088777_icons-button-start-menu-off-transprent-png-help.png<br>
-Options Icon: options_icon"><a href="https://mpng.subpng.com/20180420/tqw/kisspng-maintenance-computer-icons-car-motor-vehicle-servi-5ada5a393fc9c0.9785021515242593852613.jpg<br>
+Options Icon: https://mpng.subpng.com/20180420/tqw/kisspng-maintenance-computer-icons-car-motor-vehicle-servi-5ada5a393fc9c0.9785021515242593852613.jpg<br>
 Help Icon: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Noun_Project_question_mark_icon_1101884_cc.svg/1024px-Noun_Project_question_mark_icon_1101884_cc.svg.png<br>
 Playing Cards Sprites: http://acbl.mybigcommerce.com/clip-art-tournament/<br>
 Betting Chips Sprites: https://www.gameprogrammingcourse.com/?page_id=168<br>
