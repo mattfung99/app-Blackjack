@@ -52,10 +52,12 @@ public class BootupActivity extends AppCompatActivity {
                     translateCard(flyingCard, 5000f, 1000);
                 }, 3500)
         );
-        runOnUiThread(() -> new Handler().postDelayed(() -> gameSubTitle.setVisibility(View.VISIBLE), 4500)
-        );
-        runOnUiThread(() -> new Handler().postDelayed(this::createIntent, 8000)
-        );
+        runOnUiThread(() -> new Handler().postDelayed(() -> gameSubTitle.setVisibility(View.VISIBLE), 4500));
+        runOnUiThread(() -> new Handler().postDelayed(() -> {
+            if (!isDestroyed()) {
+                createIntent();
+            }
+        }, 8000));
     }
 
     private void enlargeTitle(TextView menuTitle) {
