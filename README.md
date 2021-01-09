@@ -1,6 +1,5 @@
 # app-Blackjack #
 ## A rendition of the classic casino game Blackjack ##
-<br><br>
 **Rules**
 <br>
 The motive of the game is to beat the dealer by getting a hand of cards where the count is as close to 21 as<br>
@@ -16,20 +15,20 @@ the same card count, the result will be a push. (a draw) Else, if the dealer\'s 
 count, the player will win.<br>
 <br>
 **Outcomes**
-<br>
 * Win (Regular): Gain 2x bet amount<br>
 * Win (Blackjack): \nGain 2.5x bet amount<br>
 * Push: Bet returned<br>
 * Loss: Lose bet amount<br>
-<br>
+<!-- end of the list -->
+
 **Features**
-<br>
 * Player Account - Allows the player to create an account to save the user's game progress, view user stats, and configure game options<br>
   * Note: If the player does not make an account, the player will not be able to view user stats<br>
 * Autosave Game Progress - Game progress is saved whenever the player leaves the game screen<br>
 * Number of Decks and Card Design Options - Allows the player to select the number of decks and card design to be used for each game of blackjack<br>
   * Note: Each player account will have its own configured game options saved. If no player is logged in, the configured game options will also be saved<br>
-<br>
+<!-- end of the list -->
+
 **Credits**
 <br>
 Start Icon: https://www.pinclipart.com/picdir/middle/108-1088777_icons-button-start-menu-off-transprent-png-help.png<br>
