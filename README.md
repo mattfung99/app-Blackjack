@@ -29,6 +29,7 @@ Features
 * Autosave Game Progress - Game progress is saved whenever the player leaves the game screen<br>
 * Number of Decks and Card Design Options - Allows the player to select the number of decks and card design to be used for each game of blackjack<br>
   Note: Each player account will have its own configured game options saved. If no player is logged in, the configured game options will also be saved<br>
+<br>
 Credits
 <br>
 Start Icon: https://www.pinclipart.com/picdir/middle/108-1088777_icons-button-start-menu-off-transprent-png-help.png<br>
