@@ -5,6 +5,8 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -26,6 +28,20 @@ public class BootupActivity extends AppCompatActivity {
         beginAnimation(gameTitle, gameSubTitle, flyingCard);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.skip_bootup, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_skip) {
+            createIntent();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void beginAnimation(TextView gameTitle, TextView gameSubTitle, ImageView flyingCard) {
         translateCard(flyingCard, -5000f, 0);
         enlargeTitle(gameTitle);
@@ -38,12 +54,7 @@ public class BootupActivity extends AppCompatActivity {
         );
         runOnUiThread(() -> new Handler().postDelayed(() -> gameSubTitle.setVisibility(View.VISIBLE), 4500)
         );
-        runOnUiThread(() -> new Handler().postDelayed(() -> {
-                    Intent bootupIntent = MainActivity.makeIntent(BootupActivity.this);
-                    startActivity(bootupIntent);
-                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    finish();
-                }, 8000)
+        runOnUiThread(() -> new Handler().postDelayed(this::createIntent, 8000)
         );
     }
 
@@ -69,5 +80,12 @@ public class BootupActivity extends AppCompatActivity {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animation);
         animatorSet.start();
+    }
+
+    private void createIntent() {
+        Intent bootupIntent = MainActivity.makeIntent(BootupActivity.this);
+        startActivity(bootupIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        finish();
     }
 }

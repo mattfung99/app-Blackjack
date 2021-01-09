@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.google.gson.Gson;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class RestartFragment extends DefaultFragment {
@@ -40,22 +41,22 @@ public class RestartFragment extends DefaultFragment {
     }
 
     private void setMenuButtonsAppearance(boolean isGameStarted) {
-        Button btnMenuStart = (Button)getActivity().findViewById(R.id.btnMenuStart);
-        Button btnMenuRestart = (Button)getActivity().findViewById(R.id.btnMenuRestart);
+        Button btnMenuStart = (Button) requireActivity().findViewById(R.id.btnMenuStart);
+        Button btnMenuRestart = (Button) requireActivity().findViewById(R.id.btnMenuRestart);
         if (isGameStarted) {
             btnMenuStart.setText(getString(R.string.menu_continue));
-            btnMenuRestart.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.default_text_color)));
-            btnMenuRestart.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.default_background_color)));
+            btnMenuRestart.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.default_text_color)));
+            btnMenuRestart.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.default_background_color)));
         } else {
             btnMenuStart.setText(getString(R.string.menu_start));
-            btnMenuRestart.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.faded_text_color)));
-            btnMenuRestart.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.faded_background_color)));
+            btnMenuRestart.setTextColor(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.faded_text_color)));
+            btnMenuRestart.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.faded_background_color)));
         }
         btnMenuRestart.setEnabled(isGameStarted);
     }
 
     private void saveUserSessionIntoSharedPref() {
-        SharedPreferences sessionPref = getActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences sessionPref = requireActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         if (dHandler.isUserLoggedIn()) {
             sessionEditor.putBoolean("userGameStarted", dHandler.isUserGameStarted());
@@ -66,7 +67,7 @@ public class RestartFragment extends DefaultFragment {
     }
 
     private void saveUserIntoSharedPref() {
-        SharedPreferences userPref = getActivity().getSharedPreferences("PREF_USERS", MODE_PRIVATE);
+        SharedPreferences userPref = requireActivity().getSharedPreferences("PREF_USERS", MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(dHandler.getUser());

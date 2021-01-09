@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/helpLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/menu_background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_create_user"
+        android:layout_width="600dp"
+        android:layout_height="300dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9">
+
+        <TextView
+            android:id="@+id/textLabelRules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="282dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="282dp"
+            android:layout_marginBottom="276dp"
+            android:text="@string/display_label_game_rules"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textRules"
+            android:layout_width="580dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="115dp"
+            android:text="@string/display_game_rules"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textLabelOutcomes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="268dp"
+            android:layout_marginTop="176dp"
+            android:layout_marginEnd="267dp"
+            android:layout_marginBottom="105dp"
+            android:text="@string/display_label_outcomes"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textOutcomeWin"
+            android:layout_width="92dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="66dp"
+            android:layout_marginTop="195dp"
+            android:layout_marginEnd="442dp"
+            android:layout_marginBottom="73dp"
+            android:text="@string/display_outcome_win_regular"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textOutcomeWinBJ"
+            android:layout_width="114dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="181dp"
+            android:layout_marginTop="195dp"
+            android:layout_marginEnd="305dp"
+            android:layout_marginBottom="73dp"
+            android:text="@string/display_outcome_win_blackjack"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textOutcomePush"
+            android:layout_width="81dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="318dp"
+            android:layout_marginTop="195dp"
+            android:layout_marginEnd="201dp"
+            android:layout_marginBottom="73dp"
+            android:text="@string/display_outcome_push"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textOutcomeLoss"
+            android:layout_width="104dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="421dp"
+            android:layout_marginTop="195dp"
+            android:layout_marginEnd="75dp"
+            android:layout_marginBottom="73dp"
+            android:text="@string/display_outcome_loss"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textLabelCredits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="277dp"
+            android:layout_marginTop="227dp"
+            android:layout_marginEnd="277dp"
+            android:layout_marginBottom="54dp"
+            android:text="@string/display_label_credits"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/creditsLinearLayout1"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="244dp"
+            android:layout_marginEnd="160dp"
+            android:layout_marginBottom="40dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textStartIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/start_icon"
+                android:textAlignment="center"
+                android:textColor="@color/default_text_color"
+                android:textColorLink="@color/invalid_red"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/textOptionsIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/options_icon"
+                android:textAlignment="center"
+                android:textColor="@color/default_text_color"
+                android:textColorLink="@color/invalid_red"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/textHelpIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/help_icon"
+                android:textAlignment="center"
+                android:textColor="@color/default_text_color"
+                android:textColorLink="@color/invalid_red"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/creditsLinearLayout2"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="160dp"
+            android:layout_marginTop="256dp"
+            android:layout_marginEnd="160dp"
+            android:layout_marginBottom="19dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/textCardImages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/card_images"
+                android:textAlignment="center"
+                android:textColorLink="@color/invalid_red"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/textChipsImages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/chips_images"
+                android:textAlignment="center"
+                android:textColorLink="@color/invalid_red"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textDeveloper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="440dp"
+            android:layout_marginTop="285dp"
+            android:text="@string/display_developer"
+            android:textColorLink="@color/purple_700"
+            android:textSize="12sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
