@@ -1,6 +1,6 @@
 # app-Blackjack
 A rendition of the classic casino game Blackjack
-<br><br>
+<br>
 Rules
 <br>
 The motive of the game is to beat the dealer by getting a hand of cards where the count is as close to 21 as<br>
@@ -14,7 +14,7 @@ hidden card will be revealed. Here on, the dealer will decide whether or not to 
 the dealer\'s count is higher than the player\'s count, the dealer will win. If both the dealer and player end with<br>
 the same card count, the result will be a push. (a draw) Else, if the dealer\'s count is lower than the player\'s<br>
 count, the player will win.<br>
-<br><br>
+<br>
 Outcomes
 <br>
 * Win (Regular): Gain 2x bet amount<br>
