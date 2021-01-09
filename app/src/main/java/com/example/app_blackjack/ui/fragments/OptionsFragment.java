@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.example.app_blackjack.R;
 import com.example.app_blackjack.model.DataHandler;
 import com.google.gson.Gson;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class OptionsFragment extends DefaultFragment {
@@ -28,11 +29,11 @@ public class OptionsFragment extends DefaultFragment {
             Toast.makeText(getContext(), getString(R.string.toast_default_reset), Toast.LENGTH_SHORT).show();
         }
         dHandler.setDataCleared(true);
-        getActivity().finish();
+        requireActivity().finish();
     }
 
     private void saveUserIntoSharedPref() {
-        SharedPreferences userPref = getActivity().getSharedPreferences("PREF_USERS", MODE_PRIVATE);
+        SharedPreferences userPref = requireActivity().getSharedPreferences("PREF_USERS", MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(dHandler.getUser());
@@ -41,7 +42,7 @@ public class OptionsFragment extends DefaultFragment {
     }
 
     private void saveUserSessionIntoSharedPref(boolean dataIndicator) {
-        SharedPreferences sessionPref = getActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences sessionPref = requireActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         if (dataIndicator) {
             sessionEditor.putBoolean("userGameStarted", dHandler.isUserGameStarted());
@@ -52,7 +53,7 @@ public class OptionsFragment extends DefaultFragment {
     }
 
     private void saveSessionIntoSharedPref() {
-        SharedPreferences sessionPref = getActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences sessionPref = requireActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         sessionEditor.putInt("defaultSettingsNumDecks", dHandler.getDefaultNumDecks());
         sessionEditor.putString("defaultSettingsCardDesign", dHandler.getDefaultChosenCardDesign());

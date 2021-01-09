@@ -18,6 +18,7 @@
             android:theme="@style/Theme.App_blackjack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,6 +30,12 @@
         <activity
             android:name=".ui.activities.OptionsActivity"
             android:label="@string/options_activity_name"
+            android:parentActivityName=".ui.activities.MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.App_blackjack" />
+        <activity
+            android:name=".ui.activities.HelpActivity"
+            android:label="@string/help_activity_name"
             android:parentActivityName=".ui.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.App_blackjack" />

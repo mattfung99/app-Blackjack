@@ -89,12 +89,13 @@ public class GameActivity extends AppCompatActivity {
                 setButtons(false);
                 break;
             case DEAL_CARDS:
+                setBettingChips(false);
                 dealCards();
                 animateDeckDefault();
                 break;
             case USER_GAMEPLAY:
-                this.setTitle(getResources().getStringArray(R.array.game_instructions)[1]);
                 setBettingChips(false);
+                this.setTitle(getResources().getStringArray(R.array.game_instructions)[1]);
                 setButtons(true);
                 break;
             case DEALER_GAMEPLAY:

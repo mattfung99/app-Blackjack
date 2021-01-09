@@ -80,9 +80,8 @@ public class ResultFragment extends DefaultFragment
                     dHandler.getUser().setGamesLost(dHandler.getUser().getGamesLost() + 1);
                     if (amount > dHandler.getUser().getUserMostMoneyLost()) {
                         dHandler.getUser().setUserMostMoneyLost(amount);
-                        saveStatsIntoSharedPref();
                     }
-                    if (dHandler.getGame().getUserBetAmount() > dHandler.getMostMoneyLost()) {
+                    if (amount > dHandler.getMostMoneyLost()) {
                         dHandler.setMostMoneyLost(amount);
                         dHandler.setUserMostMoneyLost(dHandler.getUser().getUsername());
                         saveStatsIntoSharedPref();
@@ -113,7 +112,6 @@ public class ResultFragment extends DefaultFragment
                     dHandler.getUser().setGamesWon(dHandler.getUser().getGamesWon() + 1);
                     if (amount > dHandler.getUser().getUserMostMoneyWon()) {
                         dHandler.getUser().setUserMostMoneyWon(amount);
-                        saveStatsIntoSharedPref();
                     }
                     if (amount > dHandler.getMostMoneyWon()) {
                         dHandler.setMostMoneyWon(amount);
@@ -144,16 +142,17 @@ public class ResultFragment extends DefaultFragment
     }
 
     private void saveStatsIntoSharedPref() {
-        SharedPreferences statsPref = getActivity().getSharedPreferences("PREF_STATISTICS", MODE_PRIVATE);
+        SharedPreferences statsPref = requireActivity().getSharedPreferences("PREF_STATISTICS", MODE_PRIVATE);
         SharedPreferences.Editor statsEditor = statsPref.edit();
         statsEditor = putDouble(statsEditor, "allTimeMostMoneyWon", dHandler.getMostMoneyWon());
         statsEditor.putString("allTimeMostMoneyWonUser", dHandler.getUserMostMoneyWon());
         statsEditor = putDouble(statsEditor, "allTimeMostMoneyLost", dHandler.getMostMoneyLost());
         statsEditor.putString("allTimeMostMoneyLostUser", dHandler.getUserMostMoneyLost());
+        statsEditor.apply();
     }
 
     private void saveSessionOptionsIntoSharedPref() {
-        SharedPreferences sessionPref = getActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences sessionPref = requireActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         sessionEditor = putDouble(sessionEditor, "defaultBalance", dHandler.getDefaultBalance());
         sessionEditor.apply();
@@ -164,7 +163,7 @@ public class ResultFragment extends DefaultFragment
     }
 
     private void saveUserSessionIntoSharedPref() {
-        SharedPreferences sessionPref = getActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
+        SharedPreferences sessionPref = requireActivity().getSharedPreferences("PREF_USER_SESSION", MODE_PRIVATE);
         SharedPreferences.Editor sessionEditor = sessionPref.edit();
         if (dHandler.isUserLoggedIn()) {
             sessionEditor.putBoolean("userGameStarted", dHandler.isUserGameStarted());
@@ -175,7 +174,7 @@ public class ResultFragment extends DefaultFragment
     }
 
     private void saveUserIntoSharedPref() {
-        SharedPreferences userPref = getActivity().getSharedPreferences("PREF_USERS", MODE_PRIVATE);
+        SharedPreferences userPref = requireActivity().getSharedPreferences("PREF_USERS", MODE_PRIVATE);
         SharedPreferences.Editor userEditor = userPref.edit();
         Gson gson = new Gson();
         String json = gson.toJson(dHandler.getUser());

@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupHelpButton() {
         Button btnHelp = (Button)findViewById(R.id.btnMenuHelp);
         btnHelp.setOnClickListener(v -> {
-//            Intent helpIntent = HelpActivity.makeIntent(MainActivity.this);
-//            startActivity(helpIntent);
+            Intent helpIntent = HelpActivity.makeIntent(MainActivity.this);
+            startActivity(helpIntent);
         });
     }
 

@@ -8,6 +8,7 @@
 
     <!--  BootupActivity  -->
     <string name="bootup_sub_title">[Version 1.0] | Developed by Matt Fung</string>
+    <string name="action_skip">Skip Animation</string>
 
     <!-- MainActivity   -->
     <string name="main_activity_name">Menu</string>
@@ -127,6 +128,35 @@
     <string name="result_loss">Dealer wins - you lose $%.0f</string>
     <string name="result_push">Push - Bet returned to user</string>
     <string name="toast_invalid_bet">You do not have enough money. Choose another bet</string>
+
+    <!--  HelpActivity  -->
+    <string name="help_activity_name">Help</string>
+    <string name="display_label_game_rules">Rules</string>
+    <string name="display_game_rules">
+        The motive of the game is to beat the dealer by getting a hand of cards where the count is as close to 21 as
+        possible. The player will start off by selecting a bet of $10, $25, $50 or $100. Once a bet is selected, both the
+        user and dealer will start off with two cards. The dealer\'s first card will be hidden so the player will only know
+        the count of one of the dealer\'s cards. The player can then begin their turn by deciding whether they are
+        satisfied with their card count or not. If the player decides that the card count is too low, they can press HIT
+        to get a card. If the count of the player\'s hand is over 21, the player will lose right away. Once the player is
+        satisfied with their hand, they can press STAND to end their turn. Once the player\'s turn ends, the dealer\'s
+        hidden card will be revealed. Here on, the dealer will decide whether or not to draw more cards or not. If
+        the dealer\'s count is higher than the player\'s count, the dealer will win. If both the dealer and player end with
+        the same card count, the result will be a push. (a draw) Else, if the dealer\'s count is lower than the player\'s
+        count, the player will win.
+    </string>
+    <string name="display_label_outcomes">Outcomes</string>
+    <string name="display_outcome_win_regular"> Win (Regular): Gain 2x bet amount</string>
+    <string name="display_outcome_win_blackjack">Win (Blackjack): \nGain 2.5x bet amount</string>
+    <string name="display_outcome_push">Push: \nBet returned</string>
+    <string name="display_outcome_loss">Loss: \nLose bet amount</string>
+    <string name="display_label_credits">Credits</string>
+    <string name="start_icon"><a href="https://www.pinclipart.com/picdir/middle/108-1088777_icons-button-start-menu-off-transprent-png-help.png">Start Icon</a></string>
+    <string name="options_icon"><a href="https://mpng.subpng.com/20180420/tqw/kisspng-maintenance-computer-icons-car-motor-vehicle-servi-5ada5a393fc9c0.9785021515242593852613.jpg">Options Icon</a></string>
+    <string name="help_icon"><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Noun_Project_question_mark_icon_1101884_cc.svg/1024px-Noun_Project_question_mark_icon_1101884_cc.svg.png">Help Icon</a></string>
+    <string name="card_images"><a href="http://acbl.mybigcommerce.com/clip-art-tournament/">Playing Cards Sprites</a></string>
+    <string name="chips_images"><a href="https://www.gameprogrammingcourse.com/?page_id=168">Betting Chips Sprites</a></string>
+    <string name="display_developer"><a href="https://github.com/mattfung99">Developed by Matt Fung 2021</a></string>
 
     <!--  ResultFragment  -->
     <string name="result_fragment_title">Game Over</string>
