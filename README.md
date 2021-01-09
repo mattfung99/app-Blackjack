@@ -25,10 +25,10 @@ Outcomes
 Features
 <br>
 1. Player Account - Allows the player to create an account to save the user's game progress, view user stats, and configure game options<br>
-  Note: If the player does not make an account, the player will not be able to view user stats<br>
+   Note: If the player does not make an account, the player will not be able to view user stats<br>
 2. Autosave Game Progress - Game progress is saved whenever the player leaves the game screen<br>
 3. Number of Decks and Card Design Options - Allows the player to select the number of decks and card design to be used for each game of blackjack<br>
-  Note: Each player account will have its own configured game options saved. If no player is logged in, the configured game options will also be saved<br>
+   Note: Each player account will have its own configured game options saved. If no player is logged in, the configured game options will also be saved<br>
 <br>
 Credits
 <br>
