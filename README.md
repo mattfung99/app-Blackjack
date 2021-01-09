@@ -1,7 +1,7 @@
-# app-Blackjack
-A rendition of the classic casino game Blackjack
+# app-Blackjack #
+## A rendition of the classic casino game Blackjack ##
 <br><br>
-Rules
+** Rules **
 <br>
 The motive of the game is to beat the dealer by getting a hand of cards where the count is as close to 21 as<br>
 possible. The player will start off by selecting a bet of $10, $25, $50 or $100. Once a bet is selected, both the<br>
@@ -15,22 +15,22 @@ the dealer\'s count is higher than the player\'s count, the dealer will win. If 
 the same card count, the result will be a push. (a draw) Else, if the dealer\'s count is lower than the player\'s<br>
 count, the player will win.<br>
 <br>
-Outcomes
+** Outcomes **
 <br>
 * Win (Regular): Gain 2x bet amount<br>
 * Win (Blackjack): \nGain 2.5x bet amount<br>
 * Push: Bet returned<br>
 * Loss: Lose bet amount<br>
 <br>
-Features
+** Features **
 <br>
-1. Player Account - Allows the player to create an account to save the user's game progress, view user stats, and configure game options<br>
-   Note: If the player does not make an account, the player will not be able to view user stats<br>
-2. Autosave Game Progress - Game progress is saved whenever the player leaves the game screen<br>
-3. Number of Decks and Card Design Options - Allows the player to select the number of decks and card design to be used for each game of blackjack<br>
-   Note: Each player account will have its own configured game options saved. If no player is logged in, the configured game options will also be saved<br>
+  1. Player Account - Allows the player to create an account to save the user's game progress, view user stats, and configure game options<br>
+     Note: If the player does not make an account, the player will not be able to view user stats<br>
+  2. Autosave Game Progress - Game progress is saved whenever the player leaves the game screen<br>
+  3. Number of Decks and Card Design Options - Allows the player to select the number of decks and card design to be used for each game of blackjack<br>
+     Note: Each player account will have its own configured game options saved. If no player is logged in, the configured game options will also be saved<br>
 <br>
-Credits
+** Credits **
 <br>
 Start Icon: https://www.pinclipart.com/picdir/middle/108-1088777_icons-button-start-menu-off-transprent-png-help.png<br>
 Options Icon: https://mpng.subpng.com/20180420/tqw/kisspng-maintenance-computer-icons-car-motor-vehicle-servi-5ada5a393fc9c0.9785021515242593852613.jpg<br>
