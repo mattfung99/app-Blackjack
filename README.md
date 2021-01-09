@@ -17,11 +17,11 @@ count, the player will win.<br>
 <br><br>
 Outcomes
 <br>
-Win (Regular): Gain 2x bet amount<br>
-Win (Blackjack): \nGain 2.5x bet amount<br>
-Push: Bet returned<br>
-Loss: Lose bet amount<br>
-<br><br>
+* Win (Regular): Gain 2x bet amount<br>
+* Win (Blackjack): \nGain 2.5x bet amount<br>
+* Push: Bet returned<br>
+* Loss: Lose bet amount<br>
+<br>
 Features
 <br>
 * Player Account - Allows the player to create an account to save the user's game progress, view user stats, and configure game options<br>
