@@ -30,9 +30,8 @@ count, the player will win.<br>
 <!-- end of the list -->
 
 **Credits**
-<br>
-Start Icon: https://www.pinclipart.com/picdir/middle/108-1088777_icons-button-start-menu-off-transprent-png-help.png<br>
-Options Icon: https://mpng.subpng.com/20180420/tqw/kisspng-maintenance-computer-icons-car-motor-vehicle-servi-5ada5a393fc9c0.9785021515242593852613.jpg<br>
-Help Icon: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Noun_Project_question_mark_icon_1101884_cc.svg/1024px-Noun_Project_question_mark_icon_1101884_cc.svg.png<br>
-Playing Cards Sprites: http://acbl.mybigcommerce.com/clip-art-tournament/<br>
-Betting Chips Sprites: https://www.gameprogrammingcourse.com/?page_id=168<br>
+* Start Icon: https://www.pinclipart.com/picdir/middle/108-1088777_icons-button-start-menu-off-transprent-png-help.png<br>
+* Options Icon: https://mpng.subpng.com/20180420/tqw/kisspng-maintenance-computer-icons-car-motor-vehicle-servi-5ada5a393fc9c0.9785021515242593852613.jpg<br>
+* Help Icon: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Noun_Project_question_mark_icon_1101884_cc.svg/1024px-Noun_Project_question_mark_icon_1101884_cc.svg.png<br>
+* Playing Cards Sprites: http://acbl.mybigcommerce.com/clip-art-tournament/<br>
+* Betting Chips Sprites: https://www.gameprogrammingcourse.com/?page_id=168<br>
